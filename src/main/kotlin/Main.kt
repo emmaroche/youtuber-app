@@ -1,8 +1,10 @@
 import controllers.YoutuberAPI
+import persistence.JSONSerializer
 import utils.ScannerInput.readNextInt
+import java.io.File
 import kotlin.system.exitProcess
 
-private val youtuberAPI = YoutuberAPI()
+private val youtuberAPI = YoutuberAPI(JSONSerializer(File("youtubers.json")))
 
 fun main() = runMenu()
 
