@@ -1,0 +1,28 @@
+<object-stream>
+  <list>
+    <models.Youtuber>
+      <youtuberId>0</youtuberId>
+      <youtuberName>Jj Olatunji</youtuberName>
+      <youtuberChannelName>KSI</youtuberChannelName>
+      <youtuberYearJoined>2011</youtuberYearJoined>
+      <youtuberSubscribers>16000000</youtuberSubscribers>
+      <subscribedToYoutuber>false</subscribedToYoutuber>
+    </models.Youtuber>
+    <models.Youtuber>
+      <youtuberId>1</youtuberId>
+      <youtuberName>Felix Kjellberg</youtuberName>
+      <youtuberChannelName>PewDiePie</youtuberChannelName>
+      <youtuberYearJoined>2010</youtuberYearJoined>
+      <youtuberSubscribers>111000000</youtuberSubscribers>
+      <subscribedToYoutuber>false</subscribedToYoutuber>
+    </models.Youtuber>
+    <models.Youtuber>
+      <youtuberId>2</youtuberId>
+      <youtuberName>Josh Bradley</youtuberName>
+      <youtuberChannelName>ZerkaaPLays</youtuberChannelName>
+      <youtuberYearJoined>2012</youtuberYearJoined>
+      <youtuberSubscribers>2800000</youtuberSubscribers>
+      <subscribedToYoutuber>true</subscribedToYoutuber>
+    </models.Youtuber>
+  </list>
+</object-stream>
