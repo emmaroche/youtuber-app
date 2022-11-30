@@ -1,6 +1,7 @@
 package controllers
 
 import persistence.Serializer
+import utils.Utilities.formatListString
 import models.Youtuber
 
 class YoutuberAPI(serializerType: Serializer) {
@@ -23,6 +24,35 @@ class YoutuberAPI(serializerType: Serializer) {
         youtuber.youtuberId = getId()
         return youtubers.add(youtuber)
     }
+
+    //Update method
+    fun update(id: Int, youtuber: Youtuber?): Boolean {
+        // find the youtuber object by the ID
+        val foundYoutuber = findYoutuber(id)
+
+        // if the youtuber exists, use the youtuber details passed as parameters to update the found youtuber in the ArrayList.
+        if ((foundYoutuber != null) && (youtuber != null)) {
+            foundYoutuber.youtuberName = youtuber.youtuberName
+            foundYoutuber.youtuberChannelName = youtuber.youtuberChannelName
+            foundYoutuber.youtuberYearJoined = youtuber.youtuberYearJoined
+            foundYoutuber.youtuberSubscribers = youtuber.youtuberSubscribers
+            foundYoutuber.subscribedToYoutuber = youtuber.subscribedToYoutuber
+            return true
+        }
+
+        // if the youtuber was not found, return false, indicating that the update was not successful
+        return false
+    }
+
+    //Delete method
+    fun delete(id: Int) = youtubers.removeIf { youtuber -> youtuber.youtuberId == id }
+
+    // ----------------------------------------------
+    //  LISTING METHODS FOR YOUTUBER ArrayList
+    // ----------------------------------------------
+    fun listAllYoutubers() =
+        if (youtubers.isEmpty()) "No youtubers stored"
+        else formatListString(youtubers)
 
     // ----------------------------------------------
     //  COUNTING METHODS FOR YOUTUBER ArrayList
