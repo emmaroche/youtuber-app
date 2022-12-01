@@ -32,6 +32,10 @@ fun runMenu() {
             3 -> updateYoutuber()
             4 -> deleteYoutuber()
             5 -> addYoutuberToFavs()
+            10 -> listFYoutubers()
+            11 -> listNFYoutubers()
+            12 -> listInSubOrder()
+            13 -> listNewToOldChannels()
             6 -> addVideoToYoutuber()
             7 -> listYoutuberVideos()
             8 -> updateVideoContents()
@@ -49,10 +53,16 @@ fun mainMenu() = readNextInt(
          > -----------------------------------------------------  
          > | YouTuber MENU                                     |
          > |   1) Add a YouTuber                               |
-         > |   2) List YouTubers                               |
+         > |   2) List all YouTubers                           |
          > |   3) Update a YouTuber                            |
          > |   4) Delete a YouTuber                            |
          > |   5) Add youtuber to favourites                   |
+         > ----------------------------------------------------- 
+         > | Listing MENU                                      | 
+         > |   10) List favourite YouTubers                    |
+         > |   11) List non-favourite YouTubers                |
+         > |   12) List youtubers from highest-lowest subs     |
+         > |   13) List youtubers from oldest-newest channels  | 
          > ----------------------------------------------------- 
          > | Video MENU                                        | 
          > |   6) Add video to a youtuber                      |
@@ -66,7 +76,7 @@ fun mainMenu() = readNextInt(
 )
 
 //------------------------------------
-//Youtuber MENU CRUD
+// Youtuber menu CRUD
 //------------------------------------
 
 //Add youtuber
@@ -215,6 +225,22 @@ fun addYoutuberToFavs() {
     }
 }
 
+//------------------------------------
+// More involved youtuber menu CRUD
+//------------------------------------
+
+//List non-favourite youtubers
+fun listNFYoutubers() = println(youtuberAPI.listNonFavouriteYoutubers())
+
+
+//List favourite youtubers
+fun listFYoutubers() = println(youtuberAPI.listFavouriteYoutubers())
+
+//List YouTubers in order of highest to the lowest subscriber count
+fun listInSubOrder() = println(youtuberAPI.listYoutubersInOrderOfSubCount())
+
+//List YouTubers in order of old-new channels based on the year they joined
+fun listNewToOldChannels() = println(youtuberAPI.listYoutubersFromNewestToOldestChannel())
 
 //------------------------------------
 // Exit App
