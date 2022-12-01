@@ -7,6 +7,8 @@
       <youtuberYearJoined>2011</youtuberYearJoined>
       <youtuberSubscribers>16000000</youtuberSubscribers>
       <subscribedToYoutuber>false</subscribedToYoutuber>
+      <videos class="linked-hash-set"/>
+      <lastVideoId>0</lastVideoId>
     </models.Youtuber>
     <models.Youtuber>
       <youtuberId>1</youtuberId>
@@ -15,6 +17,8 @@
       <youtuberYearJoined>2010</youtuberYearJoined>
       <youtuberSubscribers>111000000</youtuberSubscribers>
       <subscribedToYoutuber>false</subscribedToYoutuber>
+      <videos class="linked-hash-set"/>
+      <lastVideoId>0</lastVideoId>
     </models.Youtuber>
     <models.Youtuber>
       <youtuberId>2</youtuberId>
@@ -23,6 +27,8 @@
       <youtuberYearJoined>2012</youtuberYearJoined>
       <youtuberSubscribers>2800000</youtuberSubscribers>
       <subscribedToYoutuber>true</subscribedToYoutuber>
+      <videos class="linked-hash-set"/>
+      <lastVideoId>0</lastVideoId>
     </models.Youtuber>
   </list>
 </object-stream>
