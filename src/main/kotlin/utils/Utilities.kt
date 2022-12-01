@@ -23,10 +23,4 @@ object Utilities {
         return numberToCheck in min..max
     }
 
-    //utility method to determine if an index is valid in a list.
-//    @JvmStatic
-//    fun isValidListIndex(index: Int, list: List<Any>): Boolean {
-//        return (index >= 0 && index < list.size)
-//    }
-
 }
