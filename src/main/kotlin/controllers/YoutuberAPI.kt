@@ -3,6 +3,7 @@ package controllers
 import persistence.Serializer
 import utils.Utilities.formatListString
 import models.Youtuber
+import utils.ScannerInput
 
 class YoutuberAPI(serializerType: Serializer) {
 
@@ -47,6 +48,7 @@ class YoutuberAPI(serializerType: Serializer) {
     //Delete method
     fun delete(id: Int) = youtubers.removeIf { youtuber -> youtuber.youtuberId == id }
 
+
     // ----------------------------------------------
     //  LISTING METHODS FOR YOUTUBER ArrayList
     // ----------------------------------------------
@@ -54,10 +56,24 @@ class YoutuberAPI(serializerType: Serializer) {
         if (youtubers.isEmpty()) "No youtubers stored"
         else formatListString(youtubers)
 
+
     // ----------------------------------------------
     //  COUNTING METHODS FOR YOUTUBER ArrayList
     // ----------------------------------------------
     fun numberOfYoutubers() = youtubers.size
+
+    // ----------------------------------------------
+    //  ADD YOUTUBER to FAVOURITES METHOD
+    // ----------------------------------------------
+    fun addYoutuberToFavourites(id: Int): Boolean {
+        val foundYoutuber = findYoutuber(id)
+        if (( foundYoutuber != null) && (!foundYoutuber.isFavouriteYoutuber)
+        ){
+            foundYoutuber.isFavouriteYoutuber = true
+            return true
+        }
+        return false
+    }
 
     // ----------------------------------------------
     //  SEARCHING METHODS

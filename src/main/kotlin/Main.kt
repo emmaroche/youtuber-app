@@ -31,10 +31,11 @@ fun runMenu() {
             2 -> listAllYoutubers()
             3 -> updateYoutuber()
             4 -> deleteYoutuber()
-            5 -> addVideoToYoutuber()
-            6 -> listYoutuberVideos()
-            7 -> updateVideoContents()
-            8 -> deleteAVideo()
+            5 -> addYoutuberToFavs()
+            6 -> addVideoToYoutuber()
+            7 -> listYoutuberVideos()
+            8 -> updateVideoContents()
+            9 -> deleteAVideo()
             0 -> exitApp()
             else -> println("Invalid menu choice: $option, try again!")
         }
@@ -51,12 +52,13 @@ fun mainMenu() = readNextInt(
          > |   2) List YouTubers                               |
          > |   3) Update a YouTuber                            |
          > |   4) Delete a YouTuber                            |
+         > |   5) Add youtuber to favourites                   |
          > ----------------------------------------------------- 
          > | Video MENU                                        | 
-         > |   5) Add video to a youtuber                      |
-         > |   6) List contents of a video                     |
-         > |   7) Update contents on a video                   |
-         > |   8) Delete video                                 | 
+         > |   6) Add video to a youtuber                      |
+         > |   7) List contents of a video                     |
+         > |   8) Update contents on a video                   |
+         > |   9) Delete video                                 | 
          > ----------------------------------------------------- 
          > |   0) Exit                                         |
          > -----------------------------------------------------  
@@ -195,6 +197,24 @@ fun deleteAVideo() {
         }
     }
 }
+
+//------------------------------------
+// Add youtuber to favourites
+//------------------------------------
+fun addYoutuberToFavs() {
+    listAllYoutubers()
+    if (youtuberAPI.numberOfYoutubers() > 0) {
+        // only ask the user to choose the note to archive if active notes exist
+        val indexToArchive = readNextInt("Enter the number of the YouTuber to add to your favourites: ")
+        // pass the index of the note to NoteAPI for archiving and check for success.
+        if (youtuberAPI.addYoutuberToFavourites(indexToArchive)) {
+            println("YouTuber Added to Favourites Successful!\n")
+        } else {
+            println("Add to Favourites NOT Successful\n")
+        }
+    }
+}
+
 
 //------------------------------------
 // Exit App

@@ -28,24 +28,24 @@ class YoutuberTest {
     @BeforeEach
     fun setup() {
 
-        ksi =  Youtuber(0, "Jj Olatunji", "KSI", 2011, 16000000, false, mutableSetOf())
+        ksi =  Youtuber(0, "Jj Olatunji", "KSI", 2011, 16000000, false, false, mutableSetOf())
         musicVideo = Video(0, "No Time - Official Music Video", "Yes", "Music Videos", "Watching",  4)
 
-        pewdiepie =  Youtuber(1, "Felix Kjellberg", "PewDiePie", 2010, 111000000, false, mutableSetOf())
+        pewdiepie =  Youtuber(1, "Felix Kjellberg", "PewDiePie", 2010, 111000000, false, false, mutableSetOf())
         minecraftTutorial = Video(1, "Learn how to mine for diamonds in Minecraft", "No", "Tutorial", "Watched",  5)
 
-        zerkaa =  Youtuber(2, "Josh Bradley", "ZerkaaPLays", 2012, 2800000, true, mutableSetOf())
+        zerkaa =  Youtuber(2, "Josh Bradley", "ZerkaaPLays", 2012, 2800000, true, true, mutableSetOf())
         gta5PlayAlong = Video(2, "GTA5 Roleplay", "y", "Gaming", "Watching",  1)
 
-        mollyMae =  Youtuber(3, "Molly Mae Hague", "MollyMae", 2016, 1700000, false, mutableSetOf())
+        mollyMae =  Youtuber(3, "Molly Mae Hague", "MollyMae", 2016, 1700000, false, false, mutableSetOf())
         makeupTutorial = Video(3, "Eyeshadow tutorial", "n", "Beauty", "Watched",  3)
 
-        mrBeast =  Youtuber(4, "Jimmy Donaldson", "Mr Beast", 2012, 113000000, true, mutableSetOf())
+        mrBeast =  Youtuber(4, "Jimmy Donaldson", "Mr Beast", 2012, 113000000, true, true, mutableSetOf())
         winASportsCar = Video(4, "WIN A SPORTS CAR!!!", "yes", "Entertainment", "Watching",  2)
         givingAwayOneMillionDollars = Video(4, "GIVING AWAY 1 MILLION DOLLARS!!!", "no", "Entertainment", "Watched",  2)
         plantingOneTreeForEachLike = Video(4, "Planting One Tree For Each Like!!!", "YES", "Entertainment", "Watching",  2)
 
-        iShowSpeed = Youtuber(5, "Darren Wadkins", "iShowSpeed", 2016, 13700000, false, mutableSetOf())
+        iShowSpeed = Youtuber(5, "Darren Wadkins", "iShowSpeed", 2016, 13700000, false, true, mutableSetOf())
 
         // adding videos to youtubers
         ksi!!.addVideo(musicVideo!!)
