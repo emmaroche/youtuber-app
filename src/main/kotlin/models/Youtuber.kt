@@ -8,6 +8,7 @@ data class Youtuber(var youtuberId: Int = 0,
                     var youtuberYearJoined: Int,
                     var youtuberSubscribers: Int,
                     var subscribedToYoutuber: Boolean = false,
+                    var isFavouriteYoutuber: Boolean = false,
                     var videos : MutableSet<Video> = mutableSetOf()) {
 
     // functions to manage the video set will go in here

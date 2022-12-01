@@ -24,11 +24,11 @@ class YoutuberAPITest {
 
     @BeforeEach
     fun setup() {
-        ksi = Youtuber(0, "Jj Olatunji", "KSI", 2011, 16000000, false)
-        pewdiepie = Youtuber(1, "Felix Kjellberg", "PewDiePie", 2010, 111000000, false)
-        zerkaa = Youtuber(2, "Josh Bradley", "ZerkaaPLays", 2012, 2800000, true)
-        mollyMae = Youtuber(3, "Molly Mae Hague", "MollyMae", 2016, 1700000, false)
-        mrBeast = Youtuber(4, "Jimmy Donaldson", "Mr Beast", 2012, 113000000, true)
+        ksi = Youtuber(0, "Jj Olatunji", "KSI", 2011, 16000000, false, false)
+        pewdiepie = Youtuber(1, "Felix Kjellberg", "PewDiePie", 2010, 111000000, false, false)
+        zerkaa = Youtuber(2, "Josh Bradley", "ZerkaaPLays", 2012, 2800000, true, true)
+        mollyMae = Youtuber(3, "Molly Mae Hague", "MollyMae", 2016, 1700000, false, false)
+        mrBeast = Youtuber(4, "Jimmy Donaldson", "Mr Beast", 2012, 113000000, true, true)
 
         // adding 5 Youtubers to the youtuber api
         populatedYoutubers!!.add(ksi!!)
@@ -53,7 +53,7 @@ class YoutuberAPITest {
     inner class AddYoutubers {
         @Test
         fun `adding a youtuber to a populated list adds to ArrayList`() {
-            val newYoutuber = Youtuber(0, "Jj Olatunji", "KSI", 2011, 16000000, false)
+            val newYoutuber = Youtuber(0, "Jj Olatunji", "KSI", 2011, 16000000, false, false)
             assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
             assertTrue(populatedYoutubers!!.add(newYoutuber))
             assertEquals(6, populatedYoutubers!!.numberOfYoutubers())
@@ -62,7 +62,7 @@ class YoutuberAPITest {
 
         @Test
         fun `adding a youtuber to an empty list adds to ArrayList`() {
-            val newYoutuber = Youtuber(0, "Jj Olatunji", "KSI", 2011, 16000000, false)
+            val newYoutuber = Youtuber(0, "Jj Olatunji", "KSI", 2011, 16000000, false, false)
             assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
             assertTrue(emptyYoutubers!!.add(newYoutuber))
             assertEquals(1, emptyYoutubers!!.numberOfYoutubers())
@@ -74,14 +74,14 @@ class YoutuberAPITest {
     inner class UpdateYoutubers {
         @Test
         fun `updating a youtuber that does not exist returns false`() {
-            assertFalse(populatedYoutubers!!.update(6, Youtuber(6, "Fred Jenkins", "WorkChannel", 2020, 348902, false)))
+            assertFalse(populatedYoutubers!!.update(6, Youtuber(6, "Fred Jenkins", "WorkChannel", 2020, 348902, false, false)))
             assertFalse(
                 populatedYoutubers!!.update(
                     -1,
                     Youtuber(-1, "Darren Wadkins", "iShowSpeed", 2012, 46822, true)
                 )
             )
-            assertFalse(emptyYoutubers!!.update(0, Youtuber(0, "Jane McGrath", "Tutorials4you", 2022, 46381, false)))
+            assertFalse(emptyYoutubers!!.update(0, Youtuber(0, "Jane McGrath", "Tutorials4you", 2022, 46381, false, false)))
         }
 
         @Test
@@ -93,7 +93,7 @@ class YoutuberAPITest {
             assertEquals(2012, populatedYoutubers!!.findYoutuber(4)!!.youtuberYearJoined)
 
             // update youtuber 5 with new information and ensure contents updated successfully
-            assertTrue(populatedYoutubers!!.update(4, Youtuber(4, "Jimmy Donald", "Mr.Beast", 2013, 10110111, false)))
+            assertTrue(populatedYoutubers!!.update(4, Youtuber(4, "Jimmy Donald", "Mr.Beast", 2013, 10110111, false, false)))
             assertEquals("Jimmy Donald", populatedYoutubers!!.findYoutuber(4)!!.youtuberName)
             assertEquals("Mr.Beast", populatedYoutubers!!.findYoutuber(4)!!.youtuberChannelName)
             assertEquals(2013, populatedYoutubers!!.findYoutuber(4)!!.youtuberYearJoined)
@@ -143,7 +143,30 @@ class YoutuberAPITest {
             }
         }
 
-        @Nested
+    @Nested
+    inner class FavouriteYoutubers {
+        @Test
+        fun `favouriting a note that does not exist returns false`() {
+            assertFalse(populatedYoutubers!!.addYoutuberToFavourites(6))
+            assertFalse(populatedYoutubers!!.addYoutuberToFavourites(-1))
+        }
+
+        @Test
+        fun `favouriting an already favourited note returns false`() {
+            assertTrue(populatedYoutubers!!.findYoutuber(2)!!.isFavouriteYoutuber)
+            assertFalse(populatedYoutubers!!.addYoutuberToFavourites(2))
+        }
+
+        @Test
+        fun `favouriting an active youtuber that exists returns true and favouriting`() {
+            assertFalse(populatedYoutubers!!.findYoutuber(1)!!.isFavouriteYoutuber)
+            assertTrue(populatedYoutubers!!.addYoutuberToFavourites(1))
+            assertTrue(populatedYoutubers!!.findYoutuber(1)!!.isFavouriteYoutuber)
+        }
+    }
+
+
+    @Nested
         inner class PersistenceTests {
 
             @Test
