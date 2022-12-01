@@ -3,7 +3,6 @@ package controllers
 import persistence.Serializer
 import utils.Utilities.formatListString
 import models.Youtuber
-import utils.ScannerInput
 
 class YoutuberAPI(serializerType: Serializer) {
 
@@ -48,7 +47,6 @@ class YoutuberAPI(serializerType: Serializer) {
     //Delete method
     fun delete(id: Int) = youtubers.removeIf { youtuber -> youtuber.youtuberId == id }
 
-
     // ----------------------------------------------
     //  LISTING METHODS FOR YOUTUBER ArrayList
     // ----------------------------------------------
@@ -56,11 +54,30 @@ class YoutuberAPI(serializerType: Serializer) {
         if (youtubers.isEmpty()) "No youtubers stored"
         else formatListString(youtubers)
 
+    fun listNonFavouriteYoutubers(): String =
+        if  (numberOfNonFavouriteYoutubers() == 0)  "No non favourite YouTubers stored\n"
+        else formatListString(youtubers.filter { youtubers -> !youtubers.isFavouriteYoutuber})
+
+    fun listFavouriteYoutubers(): String =
+        if  (numberOfFavouriteYoutubers() == 0) "No favourite YouTubers stored\n"
+        else formatListString(youtubers.filter { youtubers -> youtubers.isFavouriteYoutuber})
+
+    fun listYoutubersInOrderOfSubCount(): String =
+        if  (youtubers.isEmpty()) "No YouTubers stored\n"
+        else formatListString(youtubers.sortedByDescending { youtubers -> youtubers.youtuberSubscribers})
+
+   fun listYoutubersFromNewestToOldestChannel(): String =
+    if  (numberOfYoutubers() == 0) "No YouTubers stored\n"
+    else formatListString(youtubers.sortedBy { youtubers -> youtubers.youtuberYearJoined})
 
     // ----------------------------------------------
     //  COUNTING METHODS FOR YOUTUBER ArrayList
     // ----------------------------------------------
     fun numberOfYoutubers() = youtubers.size
+
+    fun numberOfNonFavouriteYoutubers(): Int = youtubers.count { youtubers: Youtuber -> !youtubers.isFavouriteYoutuber}
+
+    fun numberOfFavouriteYoutubers(): Int = youtubers.count { youtubers: Youtuber -> youtubers.isFavouriteYoutuber }
 
     // ----------------------------------------------
     //  ADD YOUTUBER to FAVOURITES METHOD

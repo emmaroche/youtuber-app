@@ -141,6 +141,78 @@ class YoutuberAPITest {
                 assertTrue(youtuberString.contains("mr beast"))
 
             }
+
+            @Test
+            fun `listFavouriteYoutubers returns no favourite youtubers when ArrayList is empty`() {
+                assertEquals(0, emptyYoutubers!!.numberOfFavouriteYoutubers())
+                assertTrue(
+                    emptyYoutubers!!.listFavouriteYoutubers().lowercase().contains("no favourite")
+                )
+            }
+
+            @Test
+            fun `listFavouriteYoutubers returns favourite youtubers when ArrayList has favourite youtubers  stored`() {
+                assertEquals(2, populatedYoutubers!!.numberOfFavouriteYoutubers())
+                val favouriteYoutubersString = populatedYoutubers!!.listFavouriteYoutubers().lowercase()
+                assertFalse(favouriteYoutubersString.contains("Molly"))
+                assertFalse(favouriteYoutubersString.contains("Jimmy"))
+            }
+
+            @Test
+            fun `listNonFavouriteYoutubers returns non favourite Youtubers stored when ArrayList is empty`() {
+                assertEquals(0, emptyYoutubers!!.numberOfNonFavouriteYoutubers())
+                assertTrue(
+                    emptyYoutubers!!.listNonFavouriteYoutubers().lowercase().contains("no non favourite")
+                )
+            }
+
+            @Test
+            fun `listNonFavouriteYoutubers returns non favourite Youtubers when ArrayList has non favourite Youtubers youtubers stored`() {
+                assertEquals(3, populatedYoutubers!!.numberOfNonFavouriteYoutubers())
+                val nonFavouriteYoutubersString = populatedYoutubers!!.listNonFavouriteYoutubers().lowercase()
+                assertFalse(nonFavouriteYoutubersString.contains("KSI"))
+                assertFalse(nonFavouriteYoutubersString.contains("PewDiePie"))
+                assertFalse(nonFavouriteYoutubersString.contains("Molly Mae Hague"))
+            }
+
+            @Test
+            fun `listYoutubersInOrderOfSubCount returns no youtubers when ArrayList is empty`() {
+                assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
+                assertTrue(
+                    emptyYoutubers!!.listYoutubersInOrderOfSubCount().lowercase().contains("no youtubers store")
+                )
+            }
+
+            @Test
+            fun `listYoutubersInOrderOfSubCount returns youtubers when ArrayList has youtubers stored`() {
+                assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+                val subCountOrderString = populatedYoutubers!!.listYoutubersInOrderOfSubCount().lowercase()
+                assertFalse(subCountOrderString.contains("KSI"))
+                assertFalse(subCountOrderString.contains("PewDiePie"))
+                assertFalse(subCountOrderString.contains("ZerkaaPLays"))
+                assertFalse(subCountOrderString.contains("MollyMae"))
+                assertFalse(subCountOrderString.contains("Mr Beast"))
+            }
+
+            @Test
+            fun `listYoutubersFromNewestToOldestChannel returns no youtubers when ArrayList is empty`() {
+                assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
+                assertTrue(
+                    emptyYoutubers!!.listYoutubersFromNewestToOldestChannel().lowercase().contains("no youtubers store")
+                )
+            }
+
+            @Test
+            fun `listYoutubersFromNewestToOldestChannel returns youtubers when ArrayList has youtubers stored`() {
+                assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+                val subCountOrderString = populatedYoutubers!!.listYoutubersFromNewestToOldestChannel().lowercase()
+                assertFalse(subCountOrderString.contains("KSI"))
+                assertFalse(subCountOrderString.contains("PewDiePie"))
+                assertFalse(subCountOrderString.contains("ZerkaaPLays"))
+                assertFalse(subCountOrderString.contains("MollyMae"))
+                assertFalse(subCountOrderString.contains("Mr Beast"))
+            }
+
         }
 
     @Nested
