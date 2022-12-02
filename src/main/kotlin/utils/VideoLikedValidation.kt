@@ -3,7 +3,7 @@ package utils
 object VideoLikedValidation {
 
     @JvmStatic
-    val likedVideo = setOf ("Liked", "Disliked")
+    val likedVideo = setOf ("Liked", "Disliked", "None")
 
     @JvmStatic
     fun isValidVideoLikeStatus(likedVideoToCheck: String?): Boolean {

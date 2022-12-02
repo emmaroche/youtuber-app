@@ -39,6 +39,9 @@ fun runMenu() {
             14 -> searchYoutuberByChannel()
             15 -> searchYoutuberBySubCount()
             16 -> markVideoAsWatched()
+            17 -> listWatchedVideos()
+            18 -> searchVideosByTitle()
+            19 -> searchVideosByCategory()
             6 -> addVideoToYoutuber()
             7 -> listYoutuberVideos()
             8 -> updateVideoContents()
@@ -77,6 +80,9 @@ fun mainMenu() = readNextInt(
          > |   8) Update contents on a video                   |
          > |   9) Delete video                                 | 
          > |   16) Mark video as watched                       |
+         > |   17) List watched videos                         |
+         > |   18) Search video by title                       |
+         > |   19) Search video by category                    |
          > ----------------------------------------------------- 
          > |   0) Exit                                         |
          > -----------------------------------------------------  
@@ -224,7 +230,7 @@ fun addYoutuberToFavs() {
     if (youtuberAPI.numberOfYoutubers() > 0) {
         // only ask the user to choose the youtuber to favourite if youtuber exists
         val indexToFavourite = readNextInt("Enter the number of the YouTuber to add to your favourites: ")
-        // pass the index of the youtuber to YoutuberAPI for favouriting and check for success.
+        // pass the index of the youtuber to YoutuberAPI for favouring and check for success.
         if (youtuberAPI.addYoutuberToFavourites(indexToFavourite)) {
             println("YouTuber Added to Favourites Successful!\n")
         } else {
@@ -236,29 +242,37 @@ fun addYoutuberToFavs() {
 //------------------------------------
 // Mark video as watched
 //------------------------------------
+
 fun markVideoAsWatched() {
-    val youtuber: Youtuber? = askUserToChooseYoutuber()
-    if (youtuber != null) {
-        val video: Video? = askUserToChooseVideo(youtuber)
-        // pass the index of the note to NoteAPI for archiving and check for success.
+    val youtube: Youtuber? = askUserToChooseYoutuber()
+    if (youtube != null) {
+        val video: Video? = askUserToChooseVideo(youtube)
         if (video != null) {
-            val isMarked = youtuber.markingVideoAsWatched(video.videoId)
-            if (isMarked) {
-                println("YouTuber Added to Favourites Successful!\n")
-            } else {
-                println("Add to Favourites NOT Successful\n")
+            val changeStatus: Char
+            if (video.markVideoAsWatched) {
+                changeStatus = readNextChar("This video is currently marked as watched...do you want to update the watched status to 'Yet to watch'? (y/n)")
+                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
+                    video.markVideoAsWatched = false
+                    video.watchedStatus = ("Yet to watch")
+
+            }
+            else {
+                changeStatus = readNextChar("This video is currently Yet to watch...do you want to mark it as Watched? (y/n)")
+                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
+                    video.markVideoAsWatched = true
+                    video.watchedStatus = ("Watched")
+
             }
         }
     }
 }
 
-//------------------------------------
-// More involved youtuber menu CRUD
-//------------------------------------
+//--------------------------------------------
+// More involved listing methods
+//--------------------------------------------
 
 //List non-favourite youtubers
 fun listNFYoutubers() = println(youtuberAPI.listNonFavouriteYoutubers())
-
 
 //List favourite youtubers
 fun listFYoutubers() = println(youtuberAPI.listFavouriteYoutubers())
@@ -268,6 +282,15 @@ fun listInSubOrder() = println(youtuberAPI.listYoutubersInOrderOfSubCount())
 
 //List YouTubers in order of old-new channels based on the year they joined
 fun listNewToOldChannels() = println(youtuberAPI.listYoutubersFromNewestToOldestChannel())
+
+//list watched videos
+fun listWatchedVideos(){
+    if (youtuberAPI.numberOfWatchedVideos() > 0) {
+        println("Total watched videos: ${youtuberAPI.numberOfWatchedVideos()}")
+        println(youtuberAPI.listWatchedVideos())
+    }
+    else println("No videos marked as watched")
+}
 
 //------------------------------------
 // Searching methods
@@ -294,6 +317,28 @@ fun searchYoutuberBySubCount() {
     }
 }
 
+//search videos by title
+fun searchVideosByTitle() {
+    val searchContents = readNextLine("Enter the video title to search by: ")
+    val searchResults = youtuberAPI.searchVideoByTitle(searchContents)
+    if (searchResults.isEmpty()) {
+        println("No videos found")
+    } else {
+        println(searchResults)
+    }
+}
+
+//search videos by category
+fun searchVideosByCategory() {
+    val searchContents = readNextLine("Enter the video category to search by: ")
+    val searchResults = youtuberAPI.searchVideoByCategory(searchContents)
+    if (searchResults.isEmpty()) {
+        println("No videos found")
+    } else {
+        println(searchResults)
+    }
+}
+
 //------------------------------------
 // Exit App
 //------------------------------------
@@ -301,7 +346,6 @@ fun exitApp() {
     println("Exiting app ... Thank you for using! :)")
     exitProcess(0)
 }
-
 
 //------------------------------------
 //HELPER FUNCTIONS

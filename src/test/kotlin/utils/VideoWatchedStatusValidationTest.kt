@@ -8,9 +8,8 @@ import utils.VideoWatchedStatusValidation.videoWatchedStatus
 class VideoWatchedStatusValidationTest {
     @Test
     fun likedVideoReturnsFulllikedVideoSet(){
-        Assertions.assertEquals(3, watched.size)
+        Assertions.assertEquals(2, watched.size)
         Assertions.assertTrue(watched.contains("Yet to watch"))
-        Assertions.assertTrue(watched.contains("Watching"))
         Assertions.assertTrue(watched.contains("Watched"))
 
     }
@@ -20,9 +19,6 @@ class VideoWatchedStatusValidationTest {
         Assertions.assertTrue(videoWatchedStatus("Yet to watch"))
         Assertions.assertTrue(videoWatchedStatus("yet to watch"))
         Assertions.assertTrue(videoWatchedStatus("YET TO WATCH"))
-        Assertions.assertTrue(videoWatchedStatus("Watching"))
-        Assertions.assertTrue(videoWatchedStatus("watching"))
-        Assertions.assertTrue(videoWatchedStatus("WATCHING"))
         Assertions.assertTrue(videoWatchedStatus("Watched"))
         Assertions.assertTrue(videoWatchedStatus("watched"))
         Assertions.assertTrue(videoWatchedStatus("WATCHED"))
