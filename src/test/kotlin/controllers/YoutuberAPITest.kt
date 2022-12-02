@@ -237,6 +237,107 @@ class YoutuberAPITest {
         }
     }
 
+    @Nested
+    inner class CountingMethods {
+
+        @Test
+        fun numberOfYoutubersCalculatedCorrectly() {
+            assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+            assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
+        }
+
+        @Test
+        fun numberOfNonFavouriteYoutubersCalculatedCorrectly() {
+            assertEquals(3, populatedYoutubers!!.numberOfNonFavouriteYoutubers())
+            assertEquals(0, emptyYoutubers!!.numberOfNonFavouriteYoutubers())
+        }
+        @Test
+        fun numberOfFavouriteYoutubersNotesCalculatedCorrectly() {
+            assertEquals(2, populatedYoutubers!!.numberOfFavouriteYoutubers())
+            assertEquals(0, emptyYoutubers!!.numberOfFavouriteYoutubers())
+        }
+        @Test
+        fun numberOfNotesBySubCountCalculatedCorrectly() {
+            assertEquals(1, populatedYoutubers!!.numberOfNotesBySubCount(16000000))
+            assertEquals(0, populatedYoutubers!!.numberOfNotesBySubCount(3))
+            assertEquals(1, populatedYoutubers!!.numberOfNotesBySubCount(111000000))
+            assertEquals(0, populatedYoutubers!!.numberOfNotesBySubCount(4))
+            assertEquals(1, populatedYoutubers!!.numberOfNotesBySubCount(1700000))
+            assertEquals(0, emptyYoutubers!!.numberOfNotesBySubCount(1))
+        }
+
+    }
+
+    @Nested
+    inner class SearchMethods {
+
+        @Test
+        fun `search youtubers by channel name returns no youtubers when no youtubers with that channel name exist`() {
+            // Searching a populated collection for a title that doesn't exist.
+            assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+            val searchResults = populatedYoutubers!!.searchYoutuberByChannelName("no youtubers found")
+            assertTrue(searchResults.isEmpty())
+
+            // Searching an empty collection
+            assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
+            assertTrue(emptyYoutubers!!.searchYoutuberByChannelName("no youtubers found").isEmpty())
+        }
+
+        @Test
+        fun `search youtubers by channel name returns youtubers when youtubers with that channel name exist`() {
+            assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+
+            // Searching a populated collection for a full title that exists (case matches exactly)
+            var searchResults = populatedYoutubers!!.searchYoutuberByChannelName("KSI")
+            assertTrue(searchResults.contains("KSI"))
+            assertFalse(searchResults.contains("PewDiePie"))
+
+            // Searching a populated collection for a partial title that exists (case matches exactly)
+            searchResults = populatedYoutubers!!.searchYoutuberByChannelName("PewDiePie")
+            assertTrue(searchResults.contains("PewDiePie"))
+            assertFalse(searchResults.contains("Mr Beast"))
+//
+            // Searching a populated collection for a partial title that exists (case doesn't match)
+            searchResults = populatedYoutubers!!.searchYoutuberByChannelName("ZerKAaPLays")
+            assertTrue(searchResults.contains("ZerkaaPLays"))
+            assertFalse(searchResults.contains("Molly Mae"))
+        }
+
+        @Test
+        fun `searchYoutuberBySubCount returns No youtubers when ArrayList is empty`() {
+            assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
+            assertTrue(
+                emptyYoutubers!!.searchYoutuberBySubCount(1).lowercase().contains("no youtubers found")
+            )
+        }
+
+        @Test
+        fun `searchYoutuberBySubCount returns no youtubers when no youtubers of that sub count exist`() {
+            assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+            val subcount2String = populatedYoutubers!!.searchYoutuberBySubCount(2).lowercase()
+            assertTrue(subcount2String.contains("2"))
+        }
+
+        @Test
+        fun `searchYoutuberBySubCount returns all youtubers that match the amount of or above the given sub count when youtubers of that sub count exist`() {
+            assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+            val subcount1String = populatedYoutubers!!.searchYoutuberBySubCount(16000000).lowercase()
+            assertTrue(subcount1String.contains("16000000"))
+            assertTrue(subcount1String.contains("ksi"))
+            assertTrue(subcount1String.contains("mr beast"))
+            assertTrue(subcount1String.contains("pewdiepie"))
+            assertFalse(subcount1String.contains("zerkaapLays"))
+            assertFalse(subcount1String.contains("molly"))
+
+            val subcount113String = populatedYoutubers!!.searchYoutuberBySubCount(113000000).lowercase()
+            assertTrue(subcount113String.contains("113000000"))
+            assertTrue(subcount113String.contains("jimmy"))
+            assertTrue(subcount113String.contains("beast"))
+            assertFalse(subcount113String.contains("felix"))
+            assertFalse(subcount113String.contains("zerkaapLays"))
+            assertFalse(subcount113String.contains("olatunji"))
+        }
+    }
 
     @Nested
         inner class PersistenceTests {

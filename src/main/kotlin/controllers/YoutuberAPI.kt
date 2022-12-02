@@ -79,6 +79,8 @@ class YoutuberAPI(serializerType: Serializer) {
 
     fun numberOfFavouriteYoutubers(): Int = youtubers.count { youtubers: Youtuber -> youtubers.isFavouriteYoutuber }
 
+    fun numberOfNotesBySubCount(sub: Int): Int = youtubers.count { youtubers: Youtuber -> youtubers.youtuberSubscribers == sub }
+
     // ----------------------------------------------
     //  ADD YOUTUBER to FAVOURITES METHOD
     // ----------------------------------------------
@@ -96,6 +98,17 @@ class YoutuberAPI(serializerType: Serializer) {
     //  SEARCHING METHODS
     // ---------------------------------------------
     fun findYoutuber(youtuberId : Int) =  youtubers.find{ youtuber -> youtuber.youtuberId == youtuberId }
+
+    fun searchYoutuberByChannelName(searchString: String) =
+        formatListString(youtubers.filter { youtubers -> youtubers.youtuberChannelName.contains(searchString, ignoreCase = true) })
+
+    fun searchYoutuberBySubCount(sub: Int): String =
+        if (youtubers.isEmpty()) "No YouTubers found"
+        else {
+            val listOfSubs = formatListString(youtubers.filter{ youtubers -> youtubers.youtuberSubscribers >= sub})
+            if (listOfSubs.equals("")) "No YouTubers with $sub subscribers\n"
+            else "${numberOfNotesBySubCount(sub)} Youtubers(s) with $sub subscribers\n: $listOfSubs"
+        }
 
     // ----------------------------------------------
     //  Read and write methods
