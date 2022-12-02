@@ -15,6 +15,7 @@ import utils.VideoCategoryValidation
 import utils.VideoLikedValidation
 import utils.VideoWatchedStatusValidation
 import java.io.File
+import kotlin.math.round
 import kotlin.system.exitProcess
 
 private val youtuberAPI = YoutuberAPI(JSONSerializer(File("youtubers.json")))
