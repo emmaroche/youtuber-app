@@ -52,11 +52,12 @@ data class Youtuber(var youtuberId: Int = 0,
     }
 
     fun listVideos() =
-        if (videos.isEmpty()) "\tNo videos added to this Youtuber"
+        if (videos.isEmpty()) "\tNo videos added to this YouTuber"
         else formatSetString(videos)
 
+
     // ----------------------------------------------
-    //  MARK VIDEO AS WATCHED
+    //  MARK VIDEO AS WATCHED METHOD
     // ----------------------------------------------
 
     fun markingVideoAsWatched(id: Int): Boolean {
@@ -64,17 +65,12 @@ data class Youtuber(var youtuberId: Int = 0,
         if ((foundVideo != null) && (!foundVideo.markVideoAsWatched))
         {
             foundVideo.markVideoAsWatched = true
-            //Changes watched status to video to watched if it not current set to watched
+            //Changes watched status of video to 'Watched'
             foundVideo.watchedStatus = ("Watched")
             return true
         }
         return false
     }
-
-    // ----------------------------------------------
-    //  COUNTING METHODS
-    // ----------------------------------------------
-
 
 }
 

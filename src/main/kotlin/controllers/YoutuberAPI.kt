@@ -10,27 +10,25 @@ class YoutuberAPI(serializerType: Serializer) {
     private var youtubers = ArrayList<Youtuber>()
 
     // ----------------------------------------------
-    //  For Managing the id internally in the program
+    //  For managing the id internally in the program
     // ----------------------------------------------
     private var lastId = 0
     private fun getId() = lastId++
 
     // ----------------------------------------------
-    //  CRUD METHODS FOR YOUTUBER ArrayList
+    //  CRUD METHODS FOR YOUTUBER ARRAYLIST
     // ----------------------------------------------
 
-    //Add method
     fun add(youtuber: Youtuber): Boolean {
         youtuber.youtuberId = getId()
         return youtubers.add(youtuber)
     }
 
-    //Update method
     fun update(id: Int, youtuber: Youtuber?): Boolean {
         // find the youtuber object by the ID
         val foundYoutuber = findYoutuber(id)
 
-        // if the youtuber exists, use the youtuber details passed as parameters to update the found youtuber in the ArrayList.
+        // if the youtuber exists, use the youtuber details passed as parameters to update the found youtuber in the ArrayList
         if ((foundYoutuber != null) && (youtuber != null)) {
             foundYoutuber.youtuberName = youtuber.youtuberName
             foundYoutuber.youtuberChannelName = youtuber.youtuberChannelName
@@ -39,50 +37,48 @@ class YoutuberAPI(serializerType: Serializer) {
             foundYoutuber.subscribedToYoutuber = youtuber.subscribedToYoutuber
             return true
         }
-
         // if the youtuber was not found, return false, indicating that the update was not successful
         return false
     }
 
-    //Delete method
     fun delete(id: Int) = youtubers.removeIf { youtuber -> youtuber.youtuberId == id }
 
     // ----------------------------------------------
-    //  LISTING METHODS FOR YOUTUBER ArrayList
+    //  LISTING METHODS FOR YOUTUBER ARRAYLIST
     // ----------------------------------------------
     fun listAllYoutubers() =
-        if (youtubers.isEmpty()) "No youtubers stored"
+        if (youtubers.isEmpty()) "No YouTubers stored\n"
         else formatListString(youtubers)
 
-    fun listNonFavouriteYoutubers(): String =
-        if  (numberOfNonFavouriteYoutubers() == 0)  "No non favourite YouTubers stored\n"
-        else formatListString(youtubers.filter { youtubers -> !youtubers.isFavouriteYoutuber})
-
     fun listFavouriteYoutubers(): String =
-        if  (numberOfFavouriteYoutubers() == 0) "No favourite YouTubers stored\n"
+        if  (numberOfFavouriteYoutubers() == 0) "No YouTubers stored as favourites\n"
         else formatListString(youtubers.filter { youtubers -> youtubers.isFavouriteYoutuber})
+
+    fun listNonFavouriteYoutubers(): String =
+        if  (numberOfNonFavouriteYoutubers() == 0)  "No YouTubers stored as non favourites\n"
+        else formatListString(youtubers.filter { youtubers -> !youtubers.isFavouriteYoutuber})
 
     fun listYoutubersInOrderOfSubCount(): String =
         if  (youtubers.isEmpty()) "No YouTubers stored\n"
         else formatListString(youtubers.sortedByDescending { youtubers -> youtubers.youtuberSubscribers})
 
    fun listYoutubersFromNewestToOldestChannel(): String =
-    if  (numberOfYoutubers() == 0) "No YouTubers stored\n"
-    else formatListString(youtubers.sortedBy { youtubers -> youtubers.youtuberYearJoined})
+       if  (numberOfYoutubers() == 0) "No YouTubers stored\n"
+       else formatListString(youtubers.sortedBy { youtubers -> youtubers.youtuberYearJoined})
 
     // ----------------------------------------------
-    //  COUNTING METHODS FOR YOUTUBER ArrayList
+    //  COUNTING METHODS FOR YOUTUBER ARRAYLIST
     // ----------------------------------------------
     fun numberOfYoutubers() = youtubers.size
 
-    fun numberOfNonFavouriteYoutubers(): Int = youtubers.count { youtubers: Youtuber -> !youtubers.isFavouriteYoutuber}
-
     fun numberOfFavouriteYoutubers(): Int = youtubers.count { youtubers: Youtuber -> youtubers.isFavouriteYoutuber }
+
+    fun numberOfNonFavouriteYoutubers(): Int = youtubers.count { youtubers: Youtuber -> !youtubers.isFavouriteYoutuber}
 
     fun numberOfNotesBySubCount(sub: Int): Int = youtubers.count { youtubers: Youtuber -> youtubers.youtuberSubscribers == sub }
 
     // ----------------------------------------------
-    //  ADD YOUTUBER to FAVOURITES METHOD
+    //  ADD YOUTUBER TO FAVOURITES METHOD
     // ----------------------------------------------
     fun addYoutuberToFavourites(id: Int): Boolean {
         val foundYoutuber = findYoutuber(id)
@@ -95,7 +91,7 @@ class YoutuberAPI(serializerType: Serializer) {
     }
 
     // ----------------------------------------------
-    //  SEARCHING METHODS
+    //  SEARCHING/FINDING METHODS FOR YOUTUBER ARRAYLIST
     // ---------------------------------------------
     fun findYoutuber(youtuberId : Int) =  youtubers.find{ youtuber -> youtuber.youtuberId == youtuberId }
 
@@ -106,12 +102,80 @@ class YoutuberAPI(serializerType: Serializer) {
         if (youtubers.isEmpty()) "No YouTubers found"
         else {
             val listOfSubs = formatListString(youtubers.filter{ youtubers -> youtubers.youtuberSubscribers >= sub})
-            if (listOfSubs == "") "No YouTubers with $sub subscribers\n"
-            else "${numberOfNotesBySubCount(sub)} Youtubers(s) with $sub subscribers\n: $listOfSubs"
+            if (listOfSubs == "") "No YouTubers with $sub or more subscribers found\n"
+            else "${numberOfNotesBySubCount(sub)} Youtubers(s) with $sub or more subscribers\n: $listOfSubs"
         }
 
     // ----------------------------------------------
-    //  Read and write methods
+    //  LISTING METHODS FOR VIDEO ARRAYLIST
+    // ----------------------------------------------
+    fun listWatchedVideos(): String =
+        if (numberOfYoutubers() == 0) "No videos stored"
+        else {
+            var listOfWatched = " "
+            for (youtube in youtubers) {
+                for (video in youtube.videos) {
+                    if (video.markVideoAsWatched) {
+                        listOfWatched +=  youtube.youtuberChannelName + ": " + video.videoTitle + ": " + video.watchedStatus + "\n"
+                    }
+                }
+            }
+            listOfWatched
+        }
+
+    // ----------------------------------------------
+    //  SEARCHING METHODS FOR VIDEO ARRAYLIST
+    // ----------------------------------------------
+
+    fun searchVideoByTitle(searchString: String): String {
+        return if (numberOfYoutubers() == 0) "No videos stored"
+        else {
+            var listOfCats = ""
+            for (youtube in youtubers) {
+                for (video in youtube.videos) {
+                    if (video.videoTitle.contains(searchString, ignoreCase = true)) {
+                        listOfCats += "${video}\n"
+                    }
+                }
+            }
+            if (listOfCats == "") "No videos found with title: $searchString"
+            else listOfCats
+        }
+    }
+
+    fun searchVideoByCategory(searchString: String): String {
+        return if (numberOfYoutubers() == 0) "No videos stored"
+        else {
+            var listOfCats = ""
+            for (youtube in youtubers) {
+                for (video in youtube.videos) {
+                    if (video.videoCategory.contains(searchString, ignoreCase = true)) {
+                        listOfCats += "${video}\n"
+                    }
+                }
+            }
+            if (listOfCats == "") "No videos found with category: $searchString"
+            else listOfCats
+        }
+    }
+
+    // ----------------------------------------------
+    //  COUNTING METHODS FOR VIDEO ARRAYLIST
+    // ----------------------------------------------
+    fun numberOfWatchedVideos(): Int {
+        var numberOfWatchedVideos = 0
+        for (youtube in youtubers) {
+            for (video in youtube.videos) {
+                if (video.markVideoAsWatched) {
+                    numberOfWatchedVideos++
+                }
+            }
+        }
+        return numberOfWatchedVideos
+    }
+
+    // ----------------------------------------------
+    //  READ AND WRITE METHODS
     // ---------------------------------------------
     @Throws(Exception::class)
     fun load() {

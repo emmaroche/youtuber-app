@@ -1,9 +1,9 @@
 package utils
-import models.Youtuber
+
 object VideoWatchedStatusValidation {
 
     @JvmStatic
-    val watched = setOf ("Yet to watch", "Watching", "Watched")
+    val watched = setOf ("Yet to watch", "Watched")
 
     @JvmStatic
     fun videoWatchedStatus(watchStatusToCheck: String?): Boolean {

@@ -213,6 +213,23 @@ class YoutuberAPITest {
                 assertFalse(subCountOrderString.contains("Mr Beast"))
             }
 
+            @Test
+            fun `listWatchedVideos returns the videos marked as watched that are stored when ArrayList is empty`() {
+                assertEquals(0, emptyYoutubers!!.numberOfWatchedVideos())
+                assertTrue(
+                    emptyYoutubers!!.listWatchedVideos().lowercase().contains("no videos")
+                )
+            }
+
+            @Test
+            fun `listWatchedVideos returns the videos marked as watched when ArrayList has non favourite Youtubers youtubers stored`() {
+                assertEquals(0, populatedYoutubers!!.numberOfWatchedVideos())
+                val nonFavouriteYoutubersString = populatedYoutubers!!.listWatchedVideos().lowercase()
+                assertFalse(nonFavouriteYoutubersString.contains("KSI"))
+                assertFalse(nonFavouriteYoutubersString.contains("PewDiePie"))
+                assertFalse(nonFavouriteYoutubersString.contains("Molly Mae Hague"))
+            }
+
         }
 
     @Nested
@@ -264,6 +281,12 @@ class YoutuberAPITest {
             assertEquals(0, populatedYoutubers!!.numberOfNotesBySubCount(4))
             assertEquals(1, populatedYoutubers!!.numberOfNotesBySubCount(1700000))
             assertEquals(0, emptyYoutubers!!.numberOfNotesBySubCount(1))
+        }
+
+        @Test
+        fun numberOfWatchedVideosCalculatedCorrectly() {
+            assertEquals(0, populatedYoutubers!!.numberOfWatchedVideos())
+            assertEquals(0, emptyYoutubers!!.numberOfWatchedVideos())
         }
 
     }
@@ -336,6 +359,52 @@ class YoutuberAPITest {
             assertFalse(subcount113String.contains("felix"))
             assertFalse(subcount113String.contains("zerkaapLays"))
             assertFalse(subcount113String.contains("olatunji"))
+        }
+
+        @Test
+        fun `searchVideoByTitle returns no videos when ArrayList is empty`() {
+            assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
+            assertTrue(
+                emptyYoutubers!!.searchVideoByTitle("hello").lowercase().contains("no videos stored")
+            )
+        }
+
+        @Test
+        fun `searchVideoByTitle returns no videos when no videos of that title exist`() {
+            assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+            val titleString = populatedYoutubers!!.searchVideoByTitle("HEllO").lowercase()
+            assertFalse(titleString.contains("HELLO"))
+        }
+
+        @Test
+        fun `searchVideoByTitle returns all videos that match the title`() {
+            assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+            val title1String = populatedYoutubers!!.searchVideoByTitle("Tutorial").lowercase()
+            assertTrue(title1String.contains("tutorial"))
+            assertFalse(title1String.contains("molly"))
+        }
+
+        @Test
+        fun `searchVideoByCategory returns no videos when ArrayList is empty`() {
+            assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
+            assertTrue(
+                emptyYoutubers!!.searchVideoByCategory("do i exist").lowercase().contains("no videos stored")
+            )
+        }
+
+        @Test
+        fun `searchVideoByCategory returns no videos when no videos of that title exist`() {
+            assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+            val titleString = populatedYoutubers!!.searchVideoByCategory("I DONT EXIST").lowercase()
+            assertFalse(titleString.contains("I DONT EXIST"))
+        }
+
+        @Test
+        fun `searchVideoByCategory returns all videos that match the title`() {
+            assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+            val title1String = populatedYoutubers!!.searchVideoByCategory("I exist").lowercase()
+            assertTrue(title1String.contains("i exist"))
+            assertFalse(title1String.contains("ksi"))
         }
     }
 
