@@ -37,14 +37,14 @@ fun welcomeMenu() {
 fun welcomeScreen() = readNextInt(
     """ 
          >
-         >                          Welcome to the
+         >                         Welcome to the
          >                          
          > _  _  __   _  _  ____  _  _  ____  ____  ____     __   ____  ____ 
          >( \/ )/  \ / )( \(_  _)/ )( \(  _ \(  __)(  _ \   / _\ (  _ \(  _ \
          > )  /(  O )) \/ (  )(  ) \/ ( ) _ ( ) _)  )   /  /    \ ) __/ ) __/
          >(__/  \__/ \____/ (__) \____/(____/(____)(__\_)  \_/\_/(__)  (__)  
          > 
-         >                !Press any number key to start using!              
+         >  !Press any number key followed by the enter key to start using!              
          >                         
          >                                 ↓
          >                                 """.trimMargin(">")
@@ -77,6 +77,7 @@ fun runMenu() {
             7 -> listYoutuberVideos()
             8 -> updateVideoContents()
             9 -> deleteAVideo()
+            20 -> info()
             0 -> exitApp()
             else -> println("Invalid menu choice: $option, try again!")
         }
@@ -114,6 +115,8 @@ fun mainMenu() = readNextInt(
          > |   17) List watched videos                         |
          > |   18) Search video by title                       |
          > |   19) Search video by category                    |
+         > > ----------------------------------------------------- 
+         > |   20) App info                                    |
          > ----------------------------------------------------- 
          > |   0) Exit                                         |
          > -----------------------------------------------------  
@@ -372,6 +375,39 @@ fun searchVideosByCategory() {
 }
 
 //------------------------------------
+// INFO PAGE
+//------------------------------------
+fun info() {
+
+        val option = readNextInt(
+            """ 
+         >
+         > YouTuber App Information Page!
+         > 
+         > This app allows you to store YouTubers and link many videos to them. 
+         >                          
+         > The YouTuber App is the perfect place to store information on the YouTubers you watch.
+         > In this app, you can:
+         >                     -  Add, list, update, delete and search YouTubers and Videos
+         >                     -  Add YouTubers to a favourites 
+         >                     -  Mark the videos as watched to help you keep on track of what you have and haven’t watched.
+         >                          
+         > There is also a YouTuber information dashboard available for each Youtuber and their video entries to see their channel and video information in clearer detail.                        
+         >                                 
+         > Thank you for using this app!   
+         >                          
+         > Press any number key followed by the enter key to return to the Main Menu  
+         > 
+         > """.trimMargin(">")
+        )
+
+        when (option) {
+            0 -> mainMenu()
+            else -> mainMenu()
+        }
+    }
+
+//------------------------------------
 // EXIT APP
 //------------------------------------
 fun exitApp() {
@@ -380,7 +416,7 @@ fun exitApp() {
 }
 
 //------------------------------------
-//HELPER FUNCTIONS
+// HELPER FUNCTIONS
 //------------------------------------
 private fun askUserToChooseYoutuber(): Youtuber? {
     listAllYoutubers()
