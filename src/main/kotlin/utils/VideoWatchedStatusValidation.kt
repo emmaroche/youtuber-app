@@ -1,5 +1,5 @@
 package utils
-
+import models.Youtuber
 object VideoWatchedStatusValidation {
 
     @JvmStatic

@@ -6,4 +6,5 @@ data class Video(
     var isVideoLiked: String,
     var videoCategory: String,
     var watchedStatus: String,
-    var videoRating: Int)
+    var videoRating: Int,
+    var markVideoAsWatched: Boolean = false )
