@@ -106,7 +106,7 @@ class YoutuberAPI(serializerType: Serializer) {
         if (youtubers.isEmpty()) "No YouTubers found"
         else {
             val listOfSubs = formatListString(youtubers.filter{ youtubers -> youtubers.youtuberSubscribers >= sub})
-            if (listOfSubs.equals("")) "No YouTubers with $sub subscribers\n"
+            if (listOfSubs == "") "No YouTubers with $sub subscribers\n"
             else "${numberOfNotesBySubCount(sub)} Youtubers(s) with $sub subscribers\n: $listOfSubs"
         }
 

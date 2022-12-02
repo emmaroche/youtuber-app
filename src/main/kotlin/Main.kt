@@ -38,6 +38,7 @@ fun runMenu() {
             13 -> listNewToOldChannels()
             14 -> searchYoutuberByChannel()
             15 -> searchYoutuberBySubCount()
+            16 -> markVideoAsWatched()
             6 -> addVideoToYoutuber()
             7 -> listYoutuberVideos()
             8 -> updateVideoContents()
@@ -75,6 +76,7 @@ fun mainMenu() = readNextInt(
          > |   7) List contents of a video                     |
          > |   8) Update contents on a video                   |
          > |   9) Delete video                                 | 
+         > |   16) Mark video as watched                       |
          > ----------------------------------------------------- 
          > |   0) Exit                                         |
          > -----------------------------------------------------  
@@ -220,13 +222,32 @@ fun deleteAVideo() {
 fun addYoutuberToFavs() {
     listAllYoutubers()
     if (youtuberAPI.numberOfYoutubers() > 0) {
-        // only ask the user to choose the note to archive if active notes exist
-        val indexToArchive = readNextInt("Enter the number of the YouTuber to add to your favourites: ")
-        // pass the index of the note to NoteAPI for archiving and check for success.
-        if (youtuberAPI.addYoutuberToFavourites(indexToArchive)) {
+        // only ask the user to choose the youtuber to favourite if youtuber exists
+        val indexToFavourite = readNextInt("Enter the number of the YouTuber to add to your favourites: ")
+        // pass the index of the youtuber to YoutuberAPI for favouriting and check for success.
+        if (youtuberAPI.addYoutuberToFavourites(indexToFavourite)) {
             println("YouTuber Added to Favourites Successful!\n")
         } else {
             println("Add to Favourites NOT Successful\n")
+        }
+    }
+}
+
+//------------------------------------
+// Mark video as watched
+//------------------------------------
+fun markVideoAsWatched() {
+    val youtuber: Youtuber? = askUserToChooseYoutuber()
+    if (youtuber != null) {
+        val video: Video? = askUserToChooseVideo(youtuber)
+        // pass the index of the note to NoteAPI for archiving and check for success.
+        if (video != null) {
+            val isMarked = youtuber.markingVideoAsWatched(video.videoId)
+            if (isMarked) {
+                println("YouTuber Added to Favourites Successful!\n")
+            } else {
+                println("Add to Favourites NOT Successful\n")
+            }
         }
     }
 }

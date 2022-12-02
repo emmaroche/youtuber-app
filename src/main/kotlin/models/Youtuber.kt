@@ -1,6 +1,6 @@
 package models
 
-import utils.Utilities
+import utils.Utilities.formatSetString
 
 data class Youtuber(var youtuberId: Int = 0,
                     var youtuberName: String,
@@ -15,6 +15,9 @@ data class Youtuber(var youtuberId: Int = 0,
     private var lastVideoId = 0
     private fun getVideoId() = lastVideoId++
 
+    // ----------------------------------------------
+    //  CRUD METHODS
+    // ----------------------------------------------
     fun addVideo(video: Video): Boolean {
         video.videoId = getVideoId()
         return videos.add(video)
@@ -50,6 +53,31 @@ data class Youtuber(var youtuberId: Int = 0,
 
     fun listVideos() =
         if (videos.isEmpty()) "\tNo videos added to this Youtuber"
-        else Utilities.formatSetString(videos)
+        else formatSetString(videos)
+
+    // ----------------------------------------------
+    //  MARK VIDEO AS WATCHED
+    // ----------------------------------------------
+
+    fun markingVideoAsWatched(id: Int): Boolean {
+        val foundVideo= findOne(id)
+        if ((foundVideo != null) && (!foundVideo.markVideoAsWatched))
+        {
+            foundVideo.markVideoAsWatched = true
+            //Changes watched status to video to watched if it not current set to watched
+            foundVideo.watchedStatus = ("Watched")
+            return true
+        }
+        return false
+    }
+
+    // ----------------------------------------------
+    //  COUNTING METHODS
+    // ----------------------------------------------
+
+
 }
+
+
+
 

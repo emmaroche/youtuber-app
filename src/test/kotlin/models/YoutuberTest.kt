@@ -29,21 +29,21 @@ class YoutuberTest {
     fun setup() {
 
         ksi =  Youtuber(0, "Jj Olatunji", "KSI", 2011, 16000000, false, false, mutableSetOf())
-        musicVideo = Video(0, "No Time - Official Music Video", "Yes", "Music Videos", "Watching",  4)
+        musicVideo = Video(0, "No Time - Official Music Video", "Yes", "Music Videos", "Watching",  4, false)
 
         pewdiepie =  Youtuber(1, "Felix Kjellberg", "PewDiePie", 2010, 111000000, false, false, mutableSetOf())
-        minecraftTutorial = Video(1, "Learn how to mine for diamonds in Minecraft", "No", "Tutorial", "Watched",  5)
+        minecraftTutorial = Video(1, "Learn how to mine for diamonds in Minecraft", "No", "Tutorial", "Watched",  5, false)
 
         zerkaa =  Youtuber(2, "Josh Bradley", "ZerkaaPLays", 2012, 2800000, true, true, mutableSetOf())
-        gta5PlayAlong = Video(2, "GTA5 Roleplay", "y", "Gaming", "Watching",  1)
+        gta5PlayAlong = Video(2, "GTA5 Roleplay", "y", "Gaming", "Watching",  1, true)
 
         mollyMae =  Youtuber(3, "Molly Mae Hague", "MollyMae", 2016, 1700000, false, false, mutableSetOf())
-        makeupTutorial = Video(3, "Eyeshadow tutorial", "n", "Beauty", "Watched",  3)
+        makeupTutorial = Video(3, "Eyeshadow tutorial", "n", "Beauty", "Watched",  3, false)
 
         mrBeast =  Youtuber(4, "Jimmy Donaldson", "Mr Beast", 2012, 113000000, true, true, mutableSetOf())
-        winASportsCar = Video(4, "WIN A SPORTS CAR!!!", "yes", "Entertainment", "Watching",  2)
-        givingAwayOneMillionDollars = Video(4, "GIVING AWAY 1 MILLION DOLLARS!!!", "no", "Entertainment", "Watched",  2)
-        plantingOneTreeForEachLike = Video(4, "Planting One Tree For Each Like!!!", "YES", "Entertainment", "Watching",  2)
+        winASportsCar = Video(4, "WIN A SPORTS CAR!!!", "yes", "Entertainment", "Watching",  2, true)
+        givingAwayOneMillionDollars = Video(4, "GIVING AWAY 1 MILLION DOLLARS!!!", "no", "Entertainment", "Watched",  2, true)
+        plantingOneTreeForEachLike = Video(4, "Planting One Tree For Each Like!!!", "YES", "Entertainment", "Watching",  2, true)
 
         iShowSpeed = Youtuber(5, "Darren Wadkins", "iShowSpeed", 2016, 13700000, false, true, mutableSetOf())
 
@@ -171,5 +171,28 @@ class YoutuberTest {
              assertTrue(videoString2.contains("music"))
         }
     }
+
+    @Nested
+    inner class MarkVideoAsWatched {
+        @Test
+        fun `Marking a video as watched that does not exist returns false`() {
+            assertFalse(ksi!!.markingVideoAsWatched(6))
+            assertFalse(ksi!!.markingVideoAsWatched(-1))
+        }
+
+        @Test
+        fun `Marking a video as watched that is already watched, video returns false`() {
+            assertTrue(mrBeast!!.findOne(2)!!.markVideoAsWatched)
+            assertFalse(mrBeast!!.markingVideoAsWatched(2))
+        }
+
+        @Test
+        fun `Marking a video as watched that exists returns true`() {
+            assertFalse(ksi!!.findOne(0)!!.markVideoAsWatched)
+            assertTrue(ksi!!.markingVideoAsWatched(0))
+            assertTrue(ksi!!.findOne(0)!!.markVideoAsWatched)
+        }
+    }
+
 }
 

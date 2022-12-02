@@ -1,7 +1,7 @@
 package utils
 
-import models.Youtuber
 import models.Video
+import models.Youtuber
 
 object Utilities {
 
@@ -14,7 +14,7 @@ object Utilities {
             .joinToString(separator = "\n") { youtuber ->  "$youtuber" }
 
     @JvmStatic
-    fun formatSetString(itemsToFormat: Set<Video>): String =
+    fun formatSetString(itemsToFormat: MutableSet<Video>): String =
         itemsToFormat
             .joinToString(separator = "\n") { video ->  "\t$video" }
 
