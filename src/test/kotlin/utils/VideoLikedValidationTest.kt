@@ -10,7 +10,7 @@ internal class VideoLikedValidationTest {
 
     @Test
     fun likedVideoReturnsFulllikedVideoSet(){
-        Assertions.assertEquals(2, likedVideo.size)
+        Assertions.assertEquals(3, likedVideo.size)
         Assertions.assertTrue(likedVideo.contains("Liked"))
         Assertions.assertTrue(likedVideo.contains("Disliked"))
 
