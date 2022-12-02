@@ -1,5 +1,6 @@
 package models
 
+import roundTwoDecimals
 import utils.Utilities.formatSetString
 
 data class Youtuber(var youtuberId: Int = 0,

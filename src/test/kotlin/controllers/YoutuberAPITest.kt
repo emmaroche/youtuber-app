@@ -146,7 +146,7 @@ class YoutuberAPITest {
             fun `listFavouriteYoutubers returns no favourite youtubers when ArrayList is empty`() {
                 assertEquals(0, emptyYoutubers!!.numberOfFavouriteYoutubers())
                 assertTrue(
-                    emptyYoutubers!!.listFavouriteYoutubers().lowercase().contains("no favourite")
+                    emptyYoutubers!!.listFavouriteYoutubers().lowercase().contains("no youtubers")
                 )
             }
 
@@ -162,7 +162,7 @@ class YoutuberAPITest {
             fun `listNonFavouriteYoutubers returns non favourite Youtubers stored when ArrayList is empty`() {
                 assertEquals(0, emptyYoutubers!!.numberOfNonFavouriteYoutubers())
                 assertTrue(
-                    emptyYoutubers!!.listNonFavouriteYoutubers().lowercase().contains("no non favourite")
+                    emptyYoutubers!!.listNonFavouriteYoutubers().lowercase().contains("no youtubers")
                 )
             }
 
