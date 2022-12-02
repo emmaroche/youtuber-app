@@ -36,6 +36,8 @@ fun runMenu() {
             11 -> listNFYoutubers()
             12 -> listInSubOrder()
             13 -> listNewToOldChannels()
+            14 -> searchYoutuberByChannel()
+            15 -> searchYoutuberBySubCount()
             6 -> addVideoToYoutuber()
             7 -> listYoutuberVideos()
             8 -> updateVideoContents()
@@ -63,6 +65,10 @@ fun mainMenu() = readNextInt(
          > |   11) List non-favourite YouTubers                |
          > |   12) List youtubers from highest-lowest subs     |
          > |   13) List youtubers from oldest-newest channels  | 
+         > ----------------------------------------------------- 
+         > | Searching MENU                                    | 
+         > |   14) Search by channel name                      |
+         > |   15) Search by sub count                         |
          > ----------------------------------------------------- 
          > | Video MENU                                        | 
          > |   6) Add video to a youtuber                      |
@@ -241,6 +247,31 @@ fun listInSubOrder() = println(youtuberAPI.listYoutubersInOrderOfSubCount())
 
 //List YouTubers in order of old-new channels based on the year they joined
 fun listNewToOldChannels() = println(youtuberAPI.listYoutubersFromNewestToOldestChannel())
+
+//------------------------------------
+// Searching methods
+//------------------------------------
+fun searchYoutuberByChannel() {
+
+    val searchTitle = readNextLine("Search for channel name: ")
+    val searchResults = youtuberAPI.searchYoutuberByChannelName(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("No YouTubers found\n")
+    } else {
+        println(searchResults)
+    }
+}
+
+fun searchYoutuberBySubCount() {
+
+    val searchSubCount = readNextInt("Enter the subscriber count to search by ")
+    val searchResults = youtuberAPI.searchYoutuberBySubCount(searchSubCount)
+    if (searchResults.isEmpty()) {
+        println("No YouTubers found\n")
+    } else {
+        println(searchResults)
+    }
+}
 
 //------------------------------------
 // Exit App
