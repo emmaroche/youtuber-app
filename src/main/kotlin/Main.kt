@@ -19,11 +19,42 @@ import kotlin.system.exitProcess
 
 private val youtuberAPI = YoutuberAPI(JSONSerializer(File("youtubers.json")))
 
-fun main() = runMenu()
+fun main() = welcomeMenu()
 
 //------------------------------------
-// App Menu
+// APP WELCOME SCREEN
 //------------------------------------
+
+fun welcomeMenu() {
+    do {
+        when (welcomeScreen()) {
+            1 -> runMenu()
+            else -> runMenu()
+        }
+    } while (true)
+}
+
+fun welcomeScreen() = readNextInt(
+    """ 
+         >
+         >                          Welcome to the
+         >                          
+         > _  _  __   _  _  ____  _  _  ____  ____  ____     __   ____  ____ 
+         >( \/ )/  \ / )( \(_  _)/ )( \(  _ \(  __)(  _ \   / _\ (  _ \(  _ \
+         > )  /(  O )) \/ (  )(  ) \/ ( ) _ ( ) _)  )   /  /    \ ) __/ ) __/
+         >(__/  \__/ \____/ (__) \____/(____/(____)(__\_)  \_/\_/(__)  (__)  
+         > 
+         >                !Press any number key to start using!              
+         >                         
+         >                                 ↓
+         >                                 """.trimMargin(">")
+)
+
+
+//------------------------------------
+// APP MENU
+//------------------------------------
+
 fun runMenu() {
     do {
         when (val option = mainMenu()) {
@@ -90,7 +121,7 @@ fun mainMenu() = readNextInt(
 )
 
 //------------------------------------
-// Youtuber menu CRUD
+// MENU CRUD
 //------------------------------------
 
 //Add youtuber
@@ -110,7 +141,7 @@ fun addYoutuber() {
     }
 }
 
-//Add youtubers video
+//Add video
 private fun addVideoToYoutuber() {
     val video: Youtuber? = askUserToChooseYoutuber()
     if (video != null) {
@@ -128,7 +159,7 @@ private fun addVideoToYoutuber() {
 //List all youtubers
 fun listAllYoutubers() = println(youtuberAPI.listAllYoutubers())
 
-//List videos added to the youtuber
+//List videos
 fun listYoutuberVideos(){
     val video: Youtuber? = askUserToChooseYoutuber()
     if(video != null){
@@ -163,6 +194,7 @@ fun updateYoutuber() {
     }
 }
 
+//Update video
 fun updateVideoContents(){
     val youtuber: Youtuber? = askUserToChooseYoutuber()
     if (youtuber != null) {
@@ -223,7 +255,7 @@ fun deleteAVideo() {
 }
 
 //------------------------------------
-// Add youtuber to favourites
+// ADD YOUTUBER TO FAVOURITES
 //------------------------------------
 fun addYoutuberToFavs() {
     listAllYoutubers()
@@ -240,7 +272,7 @@ fun addYoutuberToFavs() {
 }
 
 //------------------------------------
-// Mark video as watched
+// MARKING A VIDEO AS WATCHED
 //------------------------------------
 
 fun markVideoAsWatched() {
@@ -268,7 +300,7 @@ fun markVideoAsWatched() {
 }
 
 //--------------------------------------------
-// More involved listing methods
+// MORE INVOLVED LISTING METHODS
 //--------------------------------------------
 
 //List non-favourite youtubers
@@ -293,7 +325,7 @@ fun listWatchedVideos(){
 }
 
 //------------------------------------
-// Searching methods
+// SEARCHING METHODS
 //------------------------------------
 fun searchYoutuberByChannel() {
 
@@ -340,7 +372,7 @@ fun searchVideosByCategory() {
 }
 
 //------------------------------------
-// Exit App
+// EXIT APP
 //------------------------------------
 fun exitApp() {
     println("Exiting app ... Thank you for using! :)")
