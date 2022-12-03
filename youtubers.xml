@@ -8,8 +8,18 @@
       <youtuberSubscribers>16000000</youtuberSubscribers>
       <subscribedToYoutuber>false</subscribedToYoutuber>
       <isFavouriteYoutuber>false</isFavouriteYoutuber>
-      <videos class="linked-hash-set"/>
-      <lastVideoId>0</lastVideoId>
+      <videos class="linked-hash-set">
+        <models.Video>
+          <videoId>0</videoId>
+          <videoTitle>No Time - Official Music Video</videoTitle>
+          <isVideoLiked>Yes</isVideoLiked>
+          <videoCategory>Music</videoCategory>
+          <watchedStatus>Watching</watchedStatus>
+          <videoRating>4</videoRating>
+          <markVideoAsWatched>false</markVideoAsWatched>
+        </models.Video>
+      </videos>
+      <lastVideoId>1</lastVideoId>
       <backgroundBrightRed>&#x1b;[41;1m</backgroundBrightRed>
       <reset>&#x1b;[0m</reset>
     </models.Youtuber>

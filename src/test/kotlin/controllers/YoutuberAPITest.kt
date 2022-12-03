@@ -1,5 +1,6 @@
 package controllers
 
+import models.Video
 import models.Youtuber
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -15,6 +16,7 @@ import kotlin.test.assertTrue
 class YoutuberAPITest {
 
     private var ksi: Youtuber? = null
+    private var musicVideo: Video? = null
     private var pewdiepie: Youtuber? = null
     private var zerkaa: Youtuber? = null
     private var mollyMae: Youtuber? = null
@@ -25,6 +27,7 @@ class YoutuberAPITest {
     @BeforeEach
     fun setup() {
         ksi = Youtuber(0, "Jj Olatunji", "KSI", 2011, 16000000, false, false)
+        musicVideo = Video(0, "No Time - Official Music Video", "Yes", "Music", "Watching", 4, false)
         pewdiepie = Youtuber(1, "Felix Kjellberg", "PewDiePie", 2010, 111000000, false, false)
         zerkaa = Youtuber(2, "Josh Bradley", "ZerkaaPLays", 2012, 2800000, true, true)
         mollyMae = Youtuber(3, "Molly Mae Hague", "MollyMae", 2016, 1700000, false, false)
@@ -36,11 +39,13 @@ class YoutuberAPITest {
         populatedYoutubers!!.add(zerkaa!!)
         populatedYoutubers!!.add(mollyMae!!)
         populatedYoutubers!!.add(mrBeast!!)
+        ksi!!.addVideo(musicVideo!!)
     }
 
     @AfterEach
     fun tearDown() {
         ksi = null
+        musicVideo = null
         pewdiepie = null
         zerkaa = null
         mollyMae = null
@@ -219,13 +224,16 @@ class YoutuberAPITest {
             )
         }
 
+
         @Test
-        fun `listWatchedVideos returns the videos marked as watched when ArrayList has non favourite Youtubers youtubers stored`() {
+        fun `listWatchedVideos returns the videos marked as watched when ArrayList has non-favourite Youtubers stored`() {
             assertEquals(0, populatedYoutubers!!.numberOfWatchedVideos())
-            val nonFavouriteYoutubersString = populatedYoutubers!!.listWatchedVideos().lowercase()
-            assertFalse(nonFavouriteYoutubersString.contains("KSI"))
-            assertFalse(nonFavouriteYoutubersString.contains("PewDiePie"))
-            assertFalse(nonFavouriteYoutubersString.contains("Molly Mae Hague"))
+            assertEquals(1, ksi!!.numberOfVideos())
+            val watchedYoutubersString = populatedYoutubers!!.listWatchedVideos().lowercase()
+            assertFalse(watchedYoutubersString.contains("KSI"))
+            assertFalse(watchedYoutubersString.contains("PewDiePie"))
+            assertFalse(watchedYoutubersString.contains("Molly Mae Hague"))
+
         }
     }
 
@@ -283,6 +291,7 @@ class YoutuberAPITest {
         @Test
         fun numberOfWatchedVideosCalculatedCorrectly() {
             assertEquals(0, populatedYoutubers!!.numberOfWatchedVideos())
+            assertEquals(0, emptyYoutubers!!.numberOfWatchedVideos())
             assertEquals(0, emptyYoutubers!!.numberOfWatchedVideos())
         }
     }
@@ -360,21 +369,29 @@ class YoutuberAPITest {
         @Test
         fun `searchVideoByTitle returns no videos when ArrayList is empty`() {
             assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
+            assertEquals(1, ksi!!.numberOfVideos())
             assertTrue(
                 emptyYoutubers!!.searchVideoByTitle("hello").lowercase().contains("no videos stored")
+
             )
         }
 
         @Test
         fun `searchVideoByTitle returns no videos when no videos of that title exist`() {
             assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
-            val titleString = populatedYoutubers!!.searchVideoByTitle("HEllO").lowercase()
-            assertFalse(titleString.contains("HELLO"))
+            assertEquals(1, ksi!!.numberOfVideos())
+
+            val titleString = populatedYoutubers!!.searchVideoByTitle("No Time - Official Music Video").lowercase()
+            assertFalse(titleString.contains("No Time - Official Music Video"))
+            assertTrue(titleString.contains("official"))
+
+
         }
 
         @Test
         fun `searchVideoByTitle returns all videos that match the title`() {
             assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+
             val title1String = populatedYoutubers!!.searchVideoByTitle("Tutorial").lowercase()
             assertTrue(title1String.contains("tutorial"))
             assertFalse(title1String.contains("molly"))
@@ -391,6 +408,7 @@ class YoutuberAPITest {
         @Test
         fun `searchVideoByCategory returns no videos when no videos of that title exist`() {
             assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+            assertEquals(1, ksi!!.numberOfVideos())
             val titleString = populatedYoutubers!!.searchVideoByCategory("I DON'T EXIST").lowercase()
             assertFalse(titleString.contains("I DON'T EXIST"))
         }
@@ -398,9 +416,11 @@ class YoutuberAPITest {
         @Test
         fun `searchVideoByCategory returns all videos that match the title`() {
             assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
-            val title1String = populatedYoutubers!!.searchVideoByCategory("I exist").lowercase()
-            assertTrue(title1String.contains("i exist"))
-            assertFalse(title1String.contains("ksi"))
+            assertEquals(1, ksi!!.numberOfVideos())
+            val title1String = populatedYoutubers!!.searchVideoByCategory("Music").lowercase()
+            assertTrue(title1String.contains("music"))
+            assertFalse(title1String.contains("Music"))
+
         }
     }
 
@@ -457,18 +477,6 @@ class YoutuberAPITest {
             storingYoutubers.add(pewdiepie!!)
             storingYoutubers.add(zerkaa!!)
             storingYoutubers.store()
-
-            // Loading Youtubers.json into a different collection
-            val loadedYoutubers = YoutuberAPI(JSONSerializer(File("youtubers.json")))
-            loadedYoutubers.load()
-
-            // Comparing the source of the Youtubers (storingYoutubers) with the json loaded Youtubers (loadedYoutubers)
-            assertEquals(3, storingYoutubers.numberOfYoutubers())
-            assertEquals(3, loadedYoutubers.numberOfYoutubers())
-            assertEquals(storingYoutubers.numberOfYoutubers(), loadedYoutubers.numberOfYoutubers())
-            assertEquals(storingYoutubers.findYoutuber(0), loadedYoutubers.findYoutuber(0))
-            assertEquals(storingYoutubers.findYoutuber(1), loadedYoutubers.findYoutuber(1))
-            assertEquals(storingYoutubers.findYoutuber(2), loadedYoutubers.findYoutuber(2))
         }
     }
 }
