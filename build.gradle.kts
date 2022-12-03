@@ -6,6 +6,8 @@ plugins {
     id("org.jetbrains.dokka") version "1.6.10"
     application
     jacoco
+    // Plugin for Ktlint
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
 }
 
 group = "ie.setu"
@@ -31,7 +33,7 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
-    //report is always generated after tests run
+    // report is always generated after tests run
     finalizedBy(tasks.jacocoTestReport)
 }
 

@@ -2,14 +2,16 @@ package models
 
 import utils.Utilities.formatSetString
 
-data class Youtuber(var youtuberId: Int = 0,
-                    var youtuberName: String,
-                    var youtuberChannelName: String,
-                    var youtuberYearJoined: Int,
-                    var youtuberSubscribers: Int,
-                    var subscribedToYoutuber: Boolean = false,
-                    var isFavouriteYoutuber: Boolean = false,
-                    var videos : MutableSet<Video> = mutableSetOf()) {
+data class Youtuber(
+    var youtuberId: Int = 0,
+    var youtuberName: String,
+    var youtuberChannelName: String,
+    var youtuberYearJoined: Int,
+    var youtuberSubscribers: Int,
+    var subscribedToYoutuber: Boolean = false,
+    var isFavouriteYoutuber: Boolean = false,
+    var videos: MutableSet<Video> = mutableSetOf()
+) {
 
     // functions to manage the video set will go in here
     private var lastVideoId = 0
@@ -36,8 +38,8 @@ data class Youtuber(var youtuberId: Int = 0,
     fun update(id: Int, newVideo: Video): Boolean {
         val foundVideo = findOne(id)
 
-        //if the object exists, use the details passed in the newVideo parameter to
-        //update the found object in the Set
+        // if the object exists, use the details passed in the newVideo parameter to
+        // update the found object in the Set
         if (foundVideo != null) {
             foundVideo.videoTitle = newVideo.videoTitle
             foundVideo.isVideoLiked = newVideo.isVideoLiked
@@ -47,7 +49,7 @@ data class Youtuber(var youtuberId: Int = 0,
             return true
         }
 
-        //if the object was not found, return false, indicating that the update was not successful
+        // if the object was not found, return false, indicating that the update was not successful
         return false
     }
 
@@ -61,17 +63,15 @@ data class Youtuber(var youtuberId: Int = 0,
         if (videos.isEmpty()) "$backgroundBrightRed $reset No videos added to this YouTuber"
         else formatSetString(videos)
 
-
     // ----------------------------------------------
     //  MARK VIDEO AS WATCHED METHOD
     // ----------------------------------------------
 
     fun markingVideoAsWatched(id: Int): Boolean {
-        val foundVideo= findOne(id)
-        if ((foundVideo != null) && (!foundVideo.markVideoAsWatched))
-        {
+        val foundVideo = findOne(id)
+        if ((foundVideo != null) && (!foundVideo.markVideoAsWatched)) {
             foundVideo.markVideoAsWatched = true
-            //Changes watched status of video to 'Watched'
+            // Changes watched status of video to 'Watched'
             foundVideo.watchedStatus = ("Watched")
             return true
         }
@@ -88,15 +88,8 @@ data class Youtuber(var youtuberId: Int = 0,
         // resets colour and decoration back to what it previously was
         val reset = "\u001b[0m"
 
-        return  "\n" +
-                "\n$backgroundBrightRed $reset $red$bold$youtuberName$reset also known as $red$bold$youtuberChannelName$reset, joined YouTube in $red$bold$youtuberYearJoined$reset and currently has $red$bold$youtuberSubscribers$reset Subscribers \n" +
-                "\n${listVideos()} \n"
-
-
+        return "\n" +
+            "\n$backgroundBrightRed $reset $red$bold$youtuberName$reset also known as $red$bold$youtuberChannelName$reset, joined YouTube in $red$bold$youtuberYearJoined$reset and currently has $red$bold$youtuberSubscribers$reset Subscribers \n" +
+            "\n${listVideos()} \n"
     }
-
 }
-
-
-
-
