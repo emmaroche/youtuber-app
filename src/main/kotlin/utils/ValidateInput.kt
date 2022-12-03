@@ -11,7 +11,7 @@ object ValidateInput {
             if (VideoLikedValidation.isValidVideoLikeStatus(input))
                 return input
             else {
-                print("$input is an Invalid option. Please try again: ")
+                print(" $input is an Invalid option. Please try again: ")
                 input = Scanner(System.`in`).nextLine()
             }
         } while (true)
@@ -39,7 +39,7 @@ object ValidateInput {
             if (VideoWatchedStatusValidation.videoWatchedStatus(input))
                 return input
             else {
-                print("$input is an invalid status option.  Please try again: ")
+                print(" $input is an invalid status option.  Please try again: ")
                 input = Scanner(System.`in`).nextLine()
             }
         } while (true)
@@ -52,7 +52,7 @@ object ValidateInput {
             if (Utilities.validRange(input, 1 ,5))
                 return input
             else {
-                print("$input is an invalid rating, please choose a rating between 1 & 5.")
+                print(" $input is an invalid rating, please choose a rating between 1 & 5.")
                 input = ScannerInput.readNextInt(prompt)
             }
         } while (true)
@@ -65,7 +65,7 @@ object ValidateInput {
             if (Utilities.validRange(input, 2005 ,2022))
                 return input
             else {
-                print("$input is an invalid date, please choose a date ranging between 2005 & 2022.")
+                print(" $input is an invalid date, please choose a date ranging between 2005 & 2022.")
                 input = ScannerInput.readNextInt(prompt)
             }
         } while (true)
@@ -78,7 +78,7 @@ object ValidateInput {
             if (Utilities.validRange(input, 0 ,300000000))
                 return input
             else {
-                print("$input is an invalid subscriber amount, choose an amount between 0 & 300 million.")
+                print(" $input is an invalid subscriber amount, choose an amount between 0 & 300 million.")
                 input = ScannerInput.readNextInt(prompt)
             }
         } while (true)

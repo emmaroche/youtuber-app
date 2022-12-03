@@ -8,7 +8,6 @@ class YoutuberAPI(serializerType: Serializer) {
 
     private var serializer: Serializer = serializerType
     private var youtubers = ArrayList<Youtuber>()
-
     // ----------------------------------------------
     //  For managing the id internally in the program
     // ----------------------------------------------
@@ -23,6 +22,11 @@ class YoutuberAPI(serializerType: Serializer) {
         youtuber.youtuberId = getId()
         return youtubers.add(youtuber)
     }
+
+//    fun create(youtuber: Youtuber) {
+//        youtuber.youtuberId = getId()
+//        youtubers.add(youtuber)
+//    }
 
     fun update(id: Int, youtuber: Youtuber?): Boolean {
         // find the youtuber object by the ID
@@ -47,23 +51,23 @@ class YoutuberAPI(serializerType: Serializer) {
     //  LISTING METHODS FOR YOUTUBER ARRAYLIST
     // ----------------------------------------------
     fun listAllYoutubers() =
-        if (youtubers.isEmpty()) "No YouTubers stored\n"
+        if (youtubers.isEmpty()) "\n No YouTubers stored"
         else formatListString(youtubers)
 
     fun listFavouriteYoutubers(): String =
-        if  (numberOfFavouriteYoutubers() == 0) "No YouTubers stored as favourites\n"
+        if  (numberOfFavouriteYoutubers() == 0) "\n No YouTubers stored as favourites"
         else formatListString(youtubers.filter { youtubers -> youtubers.isFavouriteYoutuber})
 
     fun listNonFavouriteYoutubers(): String =
-        if  (numberOfNonFavouriteYoutubers() == 0)  "No YouTubers stored as non favourites\n"
+        if  (numberOfNonFavouriteYoutubers() == 0)  "\n No YouTubers stored as non favourites"
         else formatListString(youtubers.filter { youtubers -> !youtubers.isFavouriteYoutuber})
 
     fun listYoutubersInOrderOfSubCount(): String =
-        if  (youtubers.isEmpty()) "No YouTubers stored\n"
+        if  (youtubers.isEmpty()) "\n No YouTubers stored"
         else formatListString(youtubers.sortedByDescending { youtubers -> youtubers.youtuberSubscribers})
 
    fun listYoutubersFromNewestToOldestChannel(): String =
-       if  (numberOfYoutubers() == 0) "No YouTubers stored\n"
+       if  (numberOfYoutubers() == 0) "\n No YouTubers stored"
        else formatListString(youtubers.sortedBy { youtubers -> youtubers.youtuberYearJoined})
 
     // ----------------------------------------------
@@ -99,18 +103,18 @@ class YoutuberAPI(serializerType: Serializer) {
         formatListString(youtubers.filter { youtubers -> youtubers.youtuberChannelName.contains(searchString, ignoreCase = true) })
 
     fun searchYoutuberBySubCount(sub: Int): String =
-        if (youtubers.isEmpty()) "No YouTubers found"
+        if (youtubers.isEmpty()) "\n No YouTubers found"
         else {
             val listOfSubs = formatListString(youtubers.filter{ youtubers -> youtubers.youtuberSubscribers >= sub})
-            if (listOfSubs == "") "No YouTubers with $sub or more subscribers found\n"
-            else "${numberOfNotesBySubCount(sub)} Youtubers(s) with $sub or more subscribers\n: $listOfSubs"
+            if (listOfSubs == "") "\n No YouTubers with $sub or more subscribers found\n"
+            else "\n ${numberOfNotesBySubCount(sub)} Youtubers(s) with $sub or more subscribers\n: $listOfSubs"
         }
 
     // ----------------------------------------------
     //  LISTING METHODS FOR VIDEO ARRAYLIST
     // ----------------------------------------------
     fun listWatchedVideos(): String =
-        if (numberOfYoutubers() == 0) "No videos stored"
+        if (numberOfYoutubers() == 0) "\n No videos stored"
         else {
             var listOfWatched = " "
             for (youtube in youtubers) {
@@ -128,7 +132,7 @@ class YoutuberAPI(serializerType: Serializer) {
     // ----------------------------------------------
 
     fun searchVideoByTitle(searchString: String): String {
-        return if (numberOfYoutubers() == 0) "No videos stored"
+        return if (numberOfYoutubers() == 0) "\n No videos stored"
         else {
             var listOfCats = ""
             for (youtube in youtubers) {
@@ -138,13 +142,13 @@ class YoutuberAPI(serializerType: Serializer) {
                     }
                 }
             }
-            if (listOfCats == "") "No videos found with title: $searchString"
+            if (listOfCats == "") "\n No videos found with title: $searchString"
             else listOfCats
         }
     }
 
     fun searchVideoByCategory(searchString: String): String {
-        return if (numberOfYoutubers() == 0) "No videos stored"
+        return if (numberOfYoutubers() == 0) "\n No videos stored"
         else {
             var listOfCats = ""
             for (youtube in youtubers) {
@@ -154,7 +158,7 @@ class YoutuberAPI(serializerType: Serializer) {
                     }
                 }
             }
-            if (listOfCats == "") "No videos found with category: $searchString"
+            if (listOfCats == "") "\n No videos found with category: $searchString"
             else listOfCats
         }
     }

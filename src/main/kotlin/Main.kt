@@ -15,7 +15,6 @@ import utils.VideoCategoryValidation
 import utils.VideoLikedValidation
 import utils.VideoWatchedStatusValidation
 import java.io.File
-import kotlin.math.round
 import kotlin.system.exitProcess
 
 private val youtuberAPI = YoutuberAPI(JSONSerializer(File("youtubers.json")))
@@ -35,94 +34,231 @@ fun welcomeMenu() {
     } while (true)
 }
 
-fun welcomeScreen() = readNextInt(
-    """ 
+fun welcomeScreen(): Int {
+
+    //code reference for adding colour to improve UI: https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html#rich-text
+    //code reference for the menu titles made with ASCII to improve UI: https://patorjk.com/software/taag/#p=display&f=Graceful&t=Youtuber%20app%20menu
+
+    // displays the colour
+    val red = "\u001b[31m"
+    val brightRed = "\u001b[31;1m"
+    // displays the decoration
+    val bold = "\u001b[1m"
+    // resets colour and decoration back to what it previously was
+    val reset = "\u001b[0m"
+
+    return readNextInt(""" 
          >
-         >                         Welcome to the
-         >                          
+         >                        $bold Welcome to the $reset                         
+         > $brightRed                        
          > _  _  __   _  _  ____  _  _  ____  ____  ____     __   ____  ____ 
          >( \/ )/  \ / )( \(_  _)/ )( \(  _ \(  __)(  _ \   / _\ (  _ \(  _ \
          > )  /(  O )) \/ (  )(  ) \/ ( ) _ ( ) _)  )   /  /    \ ) __/ ) __/
          >(__/  \__/ \____/ (__) \____/(____/(____)(__\_)  \_/\_/(__)  (__)  
+         > $reset 
          > 
-         >  !Press any number key followed by the enter key to start using!              
+         > $bold !Press any number key followed by the enter key to start using!               
          >                         
-         >                                 ↓
-         >                                 """.trimMargin(">")
-)
-
+         >                                $red↓$reset                                 
+         >                                """.trimMargin(">")
+    )
+}
 
 //------------------------------------
-// APP MENU
+// APP MAIN MENU
 //------------------------------------
 
 fun runMenu() {
     do {
         when (val option = mainMenu()) {
             1 -> addYoutuber()
-            2 -> listAllYoutubers()
+            2 -> listingMenu()
             3 -> updateYoutuber()
             4 -> deleteYoutuber()
-            5 -> addYoutuberToFavs()
-            10 -> listFYoutubers()
-            11 -> listNFYoutubers()
-            12 -> listInSubOrder()
-            13 -> listNewToOldChannels()
-            14 -> searchYoutuberByChannel()
-            15 -> searchYoutuberBySubCount()
-            16 -> markVideoAsWatched()
-            17 -> listWatchedVideos()
-            18 -> searchVideosByTitle()
-            19 -> searchVideosByCategory()
-            6 -> addVideoToYoutuber()
-            7 -> listYoutuberVideos()
-            8 -> updateVideoContents()
-            9 -> deleteAVideo()
-            20 -> info()
+            5 -> searchingMenu()
+            6 -> videoMenu()
+            7 -> addYoutuberToFav()
+            8 -> info()
+
+//            -99 -> dummyData()
             0 -> exitApp()
-            else -> println("Invalid menu choice: $option, try again!")
+            else -> println("\n Invalid menu choice: $option, try again!")
         }
     } while (true)
 }
 
-fun mainMenu() = readNextInt(
-    """ 
-         > -----------------------------------------------------  
-         > |               YouTuber KEEPER APP                 |
-         > -----------------------------------------------------  
-         > | YouTuber MENU                                     |
-         > |   1) Add a YouTuber                               |
-         > |   2) List all YouTubers                           |
-         > |   3) Update a YouTuber                            |
-         > |   4) Delete a YouTuber                            |
-         > |   5) Add youtuber to favourites                   |
-         > ----------------------------------------------------- 
-         > | Listing MENU                                      | 
-         > |   10) List favourite YouTubers                    |
-         > |   11) List non-favourite YouTubers                |
-         > |   12) List youtubers from highest-lowest subs     |
-         > |   13) List youtubers from oldest-newest channels  | 
-         > ----------------------------------------------------- 
-         > | Searching MENU                                    | 
-         > |   14) Search by channel name                      |
-         > |   15) Search by sub count                         |
-         > ----------------------------------------------------- 
-         > | Video MENU                                        | 
-         > |   6) Add video to a youtuber                      |
-         > |   7) List contents of a video                     |
-         > |   8) Update contents on a video                   |
-         > |   9) Delete video                                 | 
-         > |   16) Mark video as watched                       |
-         > |   17) List watched videos                         |
-         > |   18) Search video by title                       |
-         > |   19) Search video by category                    |
-         > > ----------------------------------------------------- 
-         > |   20) App info                                    |
-         > ----------------------------------------------------- 
-         > |   0) Exit                                         |
-         > -----------------------------------------------------  
-         > ==>> """.trimMargin(">")
-)
+fun mainMenu() : Int {
+
+    // displays the colour
+    val red = "\u001b[31m"
+    val brightRed = "\u001b[31;1m"
+    // displays the decoration
+    val bold = "\u001b[1m"
+    // resets colour and decoration back to what it previously was
+    val reset = "\u001b[0m"
+
+    return readNextInt(""" 
+         >
+         >$brightRed
+         >  _  _  __   _  _  ____  _  _  ____  ____  ____     __   ____  ____    _  _  ____  __ _  _  _ 
+         > ( \/ )/  \ / )( \(_  _)/ )( \(  _ \(  __)(  _ \   / _\ (  _ \(  _ \  ( \/ )(  __)(  ( \/ )( \
+         >  )  /(  O )) \/ (  )(  ) \/ ( ) _ ( ) _)  )   /  /    \ ) __/ ) __/  / \/ \ ) _) /    /) \/ (
+         > (__/  \__/ \____/ (__) \____/(____/(____)(__\_)  \_/\_/(__)  (__)    \_)(_/(____)\_)__)\____/
+         >$reset                     
+         >     
+         >$bold 1 $red➮$reset Add a YouTuber                               
+         >$bold 2 $red➮$reset List YouTubers                           
+         >$bold 3 $red➮$reset Update a YouTuber                            
+         >$bold 4 $red➮$reset Delete a YouTuber 
+         >$bold 5 $red➮$reset Search Youtubers
+         >$bold 6 $red➮$reset YouTuber Videos MENU
+         >$bold 7 $red➮$reset Add YouTuber to Favourites List
+         >                      
+         >$bold 8 $red➮$reset About this App
+         >                     
+         >$bold 0 $red➮$reset Exit App           
+         >                       
+         >$bold Enter your option $red➮$reset  """.trimMargin(">")
+    )
+}
+
+//------------------------------------
+// APP LISTING MENU
+//------------------------------------
+
+fun listingMenu() {
+
+    // displays the colour
+    val red = "\u001b[31m"
+    val brightRed = "\u001b[31;1m"
+    // displays the decoration
+    val bold = "\u001b[1m"
+    // resets colour and decoration back to what it previously was
+    val reset = "\u001b[0m"
+
+    val option = readNextInt(
+        """ 
+         >
+         >$brightRed
+         > __    __  ____  ____  __  __ _   ___    _  _  ____  __ _  _  _ 
+         >(  )  (  )/ ___)(_  _)(  )(  ( \ / __)  ( \/ )(  __)(  ( \/ )( \
+         >/ (_/\ )( \___ \  )(   )( /    /( (_ \  / \/ \ ) _) /    /) \/ (
+         >\____/(__)(____/ (__) (__)\_)__) \___/  \_)(_/(____)\_)__)\____/
+         >$reset                   
+         >     
+         >$bold 1 $red➮$reset List ALL YouTubers 
+         >$bold 2 $red➮$reset List Favourite YouTubers                                   
+         >$bold 3 $red➮$reset List Non-Favourite YouTubers                              
+         >$bold 4 $red➮$reset List YouTubers from Oldest-Newest Channels                           
+         >$bold 5 $red➮$reset List YouTubers from Highest-Lowest Subscribers
+         > 
+         >$bold 0 $red➮$reset  Return to main menu   
+         > 
+         >$bold Enter your option $red➮$reset   """.trimMargin(">")
+    )
+
+    when (option) {
+        1 -> listAllYoutubers()
+        2 -> listFYoutubers()
+        3 -> listNFYoutubers()
+        4 -> listNewToOldChannels()
+        5 -> listInSubOrder()
+        0 -> mainMenu()
+        else -> println("\n Invalid menu choice: $option, try again!")
+    }
+}
+
+//------------------------------------
+// APP SEARCHING MENU
+//------------------------------------
+
+fun searchingMenu() {
+
+    // displays the colour
+    val red = "\u001b[31m"
+    val brightRed = "\u001b[31;1m"
+    // displays the decoration
+    val bold = "\u001b[1m"
+    // resets colour and decoration back to what it previously was
+    val reset = "\u001b[0m"
+
+    val option = readNextInt(
+        """ 
+         >
+         >$brightRed
+         > ____  ____   __   ____   ___  _  _  __  __ _   ___    _  _  ____  __ _  _  _ 
+         >/ ___)(  __) / _\ (  _ \ / __)/ )( \(  )(  ( \ / __)  ( \/ )(  __)(  ( \/ )( \
+         >\___ \ ) _) /    \ )   /( (__ ) __ ( )( /    /( (_ \  / \/ \ ) _) /    /) \/ (
+         >(____/(____)\_/\_/(__\_) \___)\_)(_/(__)\_)__) \___/  \_)(_/(____)\_)__)\____/
+         >$reset                     
+         >     
+         >$bold 1 $red➮$reset Search YouTubers by Channel Name  
+         >$bold 2 $red➮$reset Search YouTubers by Subscriber Count
+         >                                   
+         >$bold 0 $red➮$reset Return to main menu   
+         > 
+         >$bold Enter your option $red➮$reset  """.trimMargin(">")
+    )
+
+    when (option) {
+        1 -> searchYoutuberByChannel()
+        2 -> searchYoutuberBySubCount()
+        0 -> mainMenu()
+        else -> println("\n Invalid menu choice: $option, try again!")
+    }
+}
+
+//------------------------------------
+// APP VIDEO MENU
+//------------------------------------
+
+fun videoMenu() {
+
+    // displays the colour
+    val red = "\u001b[31m"
+    val brightRed = "\u001b[31;1m"
+    // displays the decoration
+    val bold = "\u001b[1m"
+    // resets colour and decoration back to what it previously was
+    val reset = "\u001b[0m"
+
+    val option = readNextInt(
+        """ 
+         >
+         >$brightRed
+         > _  _  __  ____  ____  __     _  _  ____  __ _  _  _ 
+         > / )( \(  )(    \(  __)/  \   ( \/ )(  __)(  ( \/ )( \
+         > \ \/ / )(  ) D ( ) _)(  O )  / \/ \ ) _) /    /) \/ (
+         >  \__/ (__)(____/(____)\__/   \_)(_/(____)\_)__)\____/
+         >$reset                    
+         >     
+         >$bold 1 $red➮$reset Add a Video to a YouTuber
+         >$bold 2 $red➮$reset List a Video                                  
+         >$bold 3 $red➮$reset Update Video Details                              
+         >$bold 4 $red➮$reset Delete Video                         
+         >$bold 5 $red➮$reset Mark a Video as Watched
+         >$bold 6 $red➮$reset List Watched Videos
+         >$bold 7 $red➮$reset Search Video by Title   
+         >$bold 8 $red➮$reset Search Video by Category  
+         > 
+         >$bold 0 $red➮$reset Return to main menu 
+         >   
+         >$bold Enter your option $red➮$reset  """.trimMargin(">")
+    )
+
+    when (option) {
+        1 -> addVideoToYoutuber()
+        2 -> listYoutuberVideos()
+        3 -> updateVideoContents()
+        4 -> deleteAVideo()
+        5 -> markVideoAsWatched()
+        6 -> listWatchedVideos()
+        7 -> searchVideosByTitle()
+        8 -> searchVideosByCategory()
+        0 -> mainMenu()
+        else -> println("\n  Invalid menu choice: $option, try again!")
+    }
+}
 
 //------------------------------------
 // MENU CRUD
@@ -130,18 +266,18 @@ fun mainMenu() = readNextInt(
 
 //Add youtuber
 fun addYoutuber() {
-    val youtuberName = readNextLine("Enter the name of the YouTuber you would like to add: ")
-    val youtuberChannelName = readNextLine("Enter their YouTube channel name: ")
-    val youtuberYearJoined = readValidYear("Enter the year they created their YouTube channel: ")
-    val youtuberSubscribers = readValidSubscribers("Enter how many subscribers they currently have: ")
-    val subscribedToYoutuber = readNextChar("Are you subscribed to this YouTuber?: y/n ")
+    val youtuberName = readNextLine("\n Enter the name of the YouTuber you would like to add: ")
+    val youtuberChannelName = readNextLine(" Enter their YouTube channel name: ")
+    val youtuberYearJoined = readValidYear(" Enter the year they created their YouTube channel: ")
+    val youtuberSubscribers = readValidSubscribers(" Enter how many subscribers this YouTuber has: ")
+    val subscribedToYoutuber = readNextChar(" Are you subscribed to this YouTuber?: y/n ")
     val booleanSubscribed = (subscribedToYoutuber == 'y' || subscribedToYoutuber == 'Y')
     val isAdded = youtuberAPI.add(Youtuber(youtuberName = youtuberName, youtuberChannelName = youtuberChannelName, youtuberYearJoined = youtuberYearJoined,  youtuberSubscribers = youtuberSubscribers,  subscribedToYoutuber = booleanSubscribed))
 
     if (isAdded) {
-        println("YouTuber Added Successfully")
+        println("\n YouTuber Added Successfully")
     } else {
-        println("Failed to add YouTuber")
+        println("\n Failed to add YouTuber")
     }
 }
 
@@ -150,13 +286,13 @@ private fun addVideoToYoutuber() {
     val video: Youtuber? = askUserToChooseYoutuber()
     if (video != null) {
         if (video.addVideo(Video(
-                videoTitle = readNextLine("Video Title: "),
-                videoCategory = readValidCategory("Enter a category for the video from ${VideoCategoryValidation.categories}: "),
-                isVideoLiked = readValidVideoLikedStatus("Have you ${VideoLikedValidation.likedVideo} this video?: " ),
-                videoRating = readValidRating("Video rating (1-5): "),
-                watchedStatus = readValidWatchedStatus("What is your current watch status for this video?: ${VideoWatchedStatusValidation.watched}: "))))
-            println("Video Added Successful!")
-        else println("Failed to add Video")
+                videoTitle = readNextLine("\n Video Title: "),
+                videoCategory = readValidCategory(" Video Category, please choose from ${VideoCategoryValidation.categories}: "),
+                isVideoLiked = readValidVideoLikedStatus(" Video Interaction ${VideoLikedValidation.likedVideo}: " ),
+                videoRating = readValidRating(" Video rating [1-5]: "),
+                watchedStatus = readValidWatchedStatus(" Watched Status, please choose from ${VideoWatchedStatusValidation.watched}: "))))
+            println("\n Video Added Successful!")
+        else println("\n Failed to add Video")
     }
 }
 
@@ -169,7 +305,7 @@ fun listYoutuberVideos(){
     if(video != null){
         println(video.listVideos())
     }
-    else println("Unable to list YouTubers at this moment, please try again later!")
+    else println("\n Unable to list YouTubers at this moment, please try again later!")
 }
 
 //Update youtuber
@@ -177,23 +313,23 @@ fun updateYoutuber() {
     listAllYoutubers()
     if (youtuberAPI.numberOfYoutubers() > 0) {
         // only ask the user to choose the youtuber if it exists
-        val id = readNextInt("Enter the ID of the YouTuber you want to update: ")
+        val id = readNextInt("\n Enter the number of the YouTuber you want to update: ")
         if (youtuberAPI.findYoutuber(id) != null) {
-            val youtuberName = readNextLine("Enter the name of the YouTuber you would like to add: ")
-            val youtuberChannelName = readNextLine("Enter their YouTube channel name: ")
-            val youtuberYearJoined = readValidYear("Enter the year they created their YouTube channel: ")
-            val youtuberSubscribers = readValidSubscribers("Enter how many subscribers do they currently have: ")
-            val subscribedToYoutuber = readNextChar("Are you subscribed to this YouTuber?: y/n ")
+            val youtuberName = readNextLine(" Enter the name of the YouTuber you would like to add: ")
+            val youtuberChannelName = readNextLine(" Enter their YouTube channel name: ")
+            val youtuberYearJoined = readValidYear(" Enter the year they created their YouTube channel: ")
+            val youtuberSubscribers = readValidSubscribers(" Enter how many subscribers this YouTuber has: ")
+            val subscribedToYoutuber = readNextChar(" Are you subscribed to this YouTuber?: y/n ")
             val booleanSubscribed = (subscribedToYoutuber == 'y' || subscribedToYoutuber == 'Y')
 
             // pass the ID of the youtuber and the new youtuber details to YoutuberAPI for updating and check for success.
             if (youtuberAPI.update(id, Youtuber(0, youtuberName, youtuberChannelName, youtuberYearJoined,youtuberSubscribers, subscribedToYoutuber = booleanSubscribed ))){
-                println("Update Successful")
+                println("\n Update Successful")
             } else {
-                println("Update Failed")
+                println("\n Update Failed")
             }
         } else {
-            println("There are no YouTubers linked to this ID")
+            println("\n There are no YouTubers linked to this ID")
         }
     }
 }
@@ -204,11 +340,11 @@ fun updateVideoContents(){
     if (youtuber != null) {
         val video: Video? = askUserToChooseVideo(youtuber)
         if (video != null) {
-            val newVideo = readNextLine("Enter an updated video title: ")
-            val newCategory = readValidCategory("Enter an updated category for the video from ${VideoCategoryValidation.categories}: ")
-            val newIsVideoLiked = readValidVideoLikedStatus("Enter an updated liked status from ${VideoLikedValidation.likedVideo}: ")
-            val newRating = readValidRating("Enter an updated video rating: ")
-            val newWatchedStatus = readValidWatchedStatus("What is your updated watch status for this video?: ${VideoWatchedStatusValidation.watched}: ")
+            val newVideo = readNextLine("\n Enter an updated video title: ")
+            val newCategory = readValidCategory(" Updated Video Category, please choose from ${VideoCategoryValidation.categories}: ")
+            val newIsVideoLiked = readValidVideoLikedStatus(" Updated Video Interaction ${VideoLikedValidation.likedVideo}: ")
+            val newRating = readValidRating(" Updated Video Rating [1-5]: ")
+            val newWatchedStatus = readValidWatchedStatus(" Updated Watched Status, please choose from ${VideoWatchedStatusValidation.watched}: ")
             if (youtuber.update(video.videoId, Video(
                     videoTitle = newVideo,
                     videoCategory = newCategory,
@@ -216,12 +352,12 @@ fun updateVideoContents(){
                     videoRating = newRating,
                     watchedStatus = newWatchedStatus
                 ))) {
-                println("Video Details Updated Successfully!")
+                println("\n Video Details Updated Successfully!")
             } else {
-                println("Video details NOT updated")
+                println("\n Video details NOT updated")
             }
         } else {
-            println("Invalid video Id")
+            println("\n Invalid Video ID")
         }
     }
 }
@@ -231,13 +367,13 @@ fun deleteYoutuber() {
     listAllYoutubers()
     if (youtuberAPI.numberOfYoutubers() > 0) {
         // only ask the user to choose the youtuber to delete if it exists
-        val id = readNextInt("Enter the id of the YouTuber you'd like to delete: ")
+        val id = readNextInt("\n Enter the id of the YouTuber you'd like to delete: ")
         // pass the index of the youtuber to YoutuberAPI for deleting and check for success.
         val youtuberToDelete = youtuberAPI.delete(id)
         if (youtuberToDelete) {
-            println("YouTuber deleted Successfully!")
+            println("\n YouTuber deleted Successfully!")
         } else {
-            println("Delete NOT Successful")
+            println("\n Delete NOT Successful")
         }
     }
 }
@@ -250,9 +386,9 @@ fun deleteAVideo() {
         if (video != null) {
             val isDeleted = youtuber.delete(video.videoId)
             if (isDeleted) {
-                println("Video Deleted Successfully!")
+                println("\n Video Deleted Successfully!")
             } else {
-                println("Delete NOT Successful")
+                println("\n Delete NOT Successful")
             }
         }
     }
@@ -261,16 +397,16 @@ fun deleteAVideo() {
 //------------------------------------
 // ADD YOUTUBER TO FAVOURITES
 //------------------------------------
-fun addYoutuberToFavs() {
+fun addYoutuberToFav() {
     listAllYoutubers()
     if (youtuberAPI.numberOfYoutubers() > 0) {
         // only ask the user to choose the youtuber to favourite if youtuber exists
-        val indexToFavourite = readNextInt("Enter the number of the YouTuber to add to your favourites: ")
+        val indexToFavourite = readNextInt("\n Enter the number of the YouTuber to add to your favourites: ")
         // pass the index of the youtuber to YoutuberAPI for favouring and check for success.
         if (youtuberAPI.addYoutuberToFavourites(indexToFavourite)) {
-            println("YouTuber Added to Favourites Successful!\n")
+            println("\n YouTuber Added to Favourites Successful!\n")
         } else {
-            println("Add to Favourites NOT Successful\n")
+            println("\n Add to Favourites NOT Successful\n")
         }
     }
 }
@@ -286,14 +422,14 @@ fun markVideoAsWatched() {
         if (video != null) {
             val changeStatus: Char
             if (video.markVideoAsWatched) {
-                changeStatus = readNextChar("This video is currently marked as watched...do you want to update the watched status to 'Yet to watch'? (y/n)")
+                changeStatus = readNextChar("\n This video is currently marked as watched...do you want to update the watched status to 'Yet to watch'? (y/n)")
                 if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
                     video.markVideoAsWatched = false
                     video.watchedStatus = ("Yet to watch")
 
             }
             else {
-                changeStatus = readNextChar("This video is currently Yet to watch...do you want to mark it as Watched? (y/n)")
+                changeStatus = readNextChar("\n This video is currently Yet to watch...do you want to mark it as Watched? (y/n)")
                 if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
                     video.markVideoAsWatched = true
                     video.watchedStatus = ("Watched")
@@ -322,10 +458,10 @@ fun listNewToOldChannels() = println(youtuberAPI.listYoutubersFromNewestToOldest
 //list watched videos
 fun listWatchedVideos(){
     if (youtuberAPI.numberOfWatchedVideos() > 0) {
-        println("Total watched videos: ${youtuberAPI.numberOfWatchedVideos()}")
+        println("\n Total watched videos: ${youtuberAPI.numberOfWatchedVideos()}")
         println(youtuberAPI.listWatchedVideos())
     }
-    else println("No videos marked as watched")
+    else println("\n No videos marked as watched")
 }
 
 //------------------------------------
@@ -333,10 +469,10 @@ fun listWatchedVideos(){
 //------------------------------------
 fun searchYoutuberByChannel() {
 
-    val searchTitle = readNextLine("Search for channel name: ")
+    val searchTitle = readNextLine("\n Search for channel name: ")
     val searchResults = youtuberAPI.searchYoutuberByChannelName(searchTitle)
     if (searchResults.isEmpty()) {
-        println("No YouTubers found\n")
+        println("\n No YouTubers found\n")
     } else {
         println(searchResults)
     }
@@ -344,10 +480,10 @@ fun searchYoutuberByChannel() {
 
 fun searchYoutuberBySubCount() {
 
-    val searchSubCount = readNextInt("Enter the subscriber count to search by ")
+    val searchSubCount = readNextInt("\n Enter the subscriber count to search by ")
     val searchResults = youtuberAPI.searchYoutuberBySubCount(searchSubCount)
     if (searchResults.isEmpty()) {
-        println("No YouTubers found\n")
+        println("\n No YouTubers found\n")
     } else {
         println(searchResults)
     }
@@ -355,10 +491,10 @@ fun searchYoutuberBySubCount() {
 
 //search videos by title
 fun searchVideosByTitle() {
-    val searchContents = readNextLine("Enter the video title to search by: ")
+    val searchContents = readNextLine("\n Enter the video title to search by: ")
     val searchResults = youtuberAPI.searchVideoByTitle(searchContents)
     if (searchResults.isEmpty()) {
-        println("No videos found")
+        println("\n No videos found")
     } else {
         println(searchResults)
     }
@@ -366,10 +502,10 @@ fun searchVideosByTitle() {
 
 //search videos by category
 fun searchVideosByCategory() {
-    val searchContents = readNextLine("Enter the video category to search by: ")
+    val searchContents = readNextLine("\n Enter the video category to search by: ")
     val searchResults = youtuberAPI.searchVideoByCategory(searchContents)
     if (searchResults.isEmpty()) {
-        println("No videos found")
+        println("\n No videos found")
     } else {
         println(searchResults)
     }
@@ -380,22 +516,37 @@ fun searchVideosByCategory() {
 //------------------------------------
 fun info() {
 
+    // displays the colour
+    val brightRed = "\u001b[31;1m"
+    // resets colour and decoration back to what it previously was
+    val reset = "\u001b[0m"
+
         val option = readNextInt(
             """ 
-         >
-         > YouTuber App Information Page!
+         >$brightRed                                                        
+         >                ###############################                                                         
+         >              ###################################                      
+         >             #####$reset  About the YouTuber App $brightRed ######                 
+         >            ################  #####################                    
+         >            ################    ###################                    
+         >            ################        ###############                   
+         >            ################          #############                    
+         >            ################      #################                    
+         >            ################  #####################                    
+         >            #######################################                    
+         >             #####################################                     
+         >               #################################        
+         >$reset
          > 
-         > This app allows you to store YouTubers and link many videos to them. 
+         > The YouTuber App allows you to store YouTubers and link many videos to them. 
          >                          
          > The YouTuber App is the perfect place to store information on the YouTubers you watch.
          > In this app, you can:
          >                     -  Add, list, update, delete and search YouTubers and Videos
-         >                     -  Add YouTubers to a favourites 
-         >                     -  Mark the videos as watched to help you keep on track of what you have and haven’t watched.
-         >                          
-         > There is also a YouTuber information dashboard available for each Youtuber and their video entries to see their channel and video information in clearer detail.                        
+         >                     -  Add YouTubers to a favourites list
+         >                     -  Mark the videos as watched to help you keep on track of what you have and haven’t watched
          >                                 
-         > Thank you for using this app!   
+         > Thank you for using The YouTuber App!   
          >                          
          > Press any number key followed by the enter key to return to the Main Menu  
          > 
@@ -412,7 +563,7 @@ fun info() {
 // EXIT APP
 //------------------------------------
 fun exitApp() {
-    println("Exiting app ... Thank you for using! :)")
+    println("\n Exiting app ... Thank you for using! :)")
     exitProcess(0)
 }
 
@@ -422,12 +573,12 @@ fun exitApp() {
 private fun askUserToChooseYoutuber(): Youtuber? {
     listAllYoutubers()
     if (youtuberAPI.numberOfYoutubers() > 0) {
-        val youtuber = youtuberAPI.findYoutuber(readNextInt("\nEnter the ID of the Youtuber: "))
+        val youtuber = youtuberAPI.findYoutuber(readNextInt("\n Enter the number of the Youtuber you want to choose: "))
         if (youtuber != null) {
             return youtuber //chosen youtuber is active
         }
         else {
-            println("Youtuber ID is not valid")
+            println("\n Youtuber number is not valid")
         }
     }
     return null
@@ -436,10 +587,29 @@ private fun askUserToChooseYoutuber(): Youtuber? {
 private fun askUserToChooseVideo(youtuber: Youtuber): Video? {
     return if (youtuber.numberOfVideos() > 0) {
         print(youtuber.listVideos())
-        youtuber.findOne(readNextInt("\nEnter the ID of the video: "))
+        youtuber.findOne(readNextInt("\n Enter the number of the video: "))
     }
     else{
-        println ("No videos stored for chosen Youtuber")
+        println ("\n No videos stored for chosen Youtuber")
         null
     }
 }
+
+//fun dummyData() {
+//    youtuberAPI.create(Youtuber(0, "Jj Olatunji", "KSI", 2011, 160000,
+//        subscribedToYoutuber = true,
+//        isFavouriteYoutuber = true
+//    ))
+//    youtuberAPI.create(Youtuber(1, "Jimmy Donaldson", "Mr Beast", 2012, 1500000000,
+//        subscribedToYoutuber = false,
+//        isFavouriteYoutuber = false
+//    ))
+//    youtuberAPI.create(Youtuber(2, "Darren Wadkins", "IShowSpeed", 2016, 1209000,
+//        subscribedToYoutuber = true,
+//        isFavouriteYoutuber = true
+//    ))
+//    youtuberAPI.create(Youtuber(3, "Joshua Bradley", "ZerkaaHD", 2013, 3000300,
+//        subscribedToYoutuber = false,
+//        isFavouriteYoutuber = false
+//    ))
+//}
