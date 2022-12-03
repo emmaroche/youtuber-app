@@ -1,6 +1,5 @@
 package models
 
-import roundTwoDecimals
 import utils.Utilities.formatSetString
 
 data class Youtuber(var youtuberId: Int = 0,
@@ -52,8 +51,14 @@ data class Youtuber(var youtuberId: Int = 0,
         return false
     }
 
+    // displays the colour
+    private val backgroundBrightRed = "\u001b[41;1m"
+
+    // resets colour and decoration back to what it previously was
+    private val reset = "\u001b[0m"
+
     fun listVideos() =
-        if (videos.isEmpty()) "\tNo videos added to this YouTuber"
+        if (videos.isEmpty()) "$backgroundBrightRed $reset No videos added to this YouTuber"
         else formatSetString(videos)
 
 
@@ -71,6 +76,23 @@ data class Youtuber(var youtuberId: Int = 0,
             return true
         }
         return false
+    }
+
+    override fun toString(): String {
+
+        // displays the colour
+        val red = "\u001b[31m"
+        val backgroundBrightRed = "\u001b[41;1m"
+        // displays the decoration
+        val bold = "\u001b[1m"
+        // resets colour and decoration back to what it previously was
+        val reset = "\u001b[0m"
+
+        return  "\n" +
+                "\n$backgroundBrightRed $reset $red$bold$youtuberName$reset also known as $red$bold$youtuberChannelName$reset, joined YouTube in $red$bold$youtuberYearJoined$reset and currently has $red$bold$youtuberSubscribers$reset Subscribers \n" +
+                "\n${listVideos()} \n"
+
+
     }
 
 }

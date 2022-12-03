@@ -35,7 +35,7 @@ class YoutuberTest {
         minecraftTutorial = Video(1, "Learn how to mine for diamonds in Minecraft", "No", "Tutorial", "Watched",  5, false)
 
         zerkaa =  Youtuber(2, "Josh Bradley", "ZerkaaPLays", 2012, 2800000, true, true, mutableSetOf())
-        gta5PlayAlong = Video(2, "GTA5 Roleplay", "y", "Gaming", "Watching",  1, true)
+        gta5PlayAlong = Video(2, "GTA5 Role play", "y", "Gaming", "Watching",  1, true)
 
         mollyMae =  Youtuber(3, "Molly Mae Hague", "MollyMae", 2016, 1700000, false, false, mutableSetOf())
         makeupTutorial = Video(3, "Eyeshadow tutorial", "n", "Beauty", "Watched",  3, false)

@@ -11,7 +11,7 @@ internal class VideoCategoryValidationTest {
     fun categoriesReturnsFullCategoriesSet(){
         Assertions.assertEquals(6, categories.size)
         Assertions.assertTrue(categories.contains("Gaming"))
-        Assertions.assertTrue(categories.contains("Music Videos"))
+        Assertions.assertTrue(categories.contains("Music"))
         Assertions.assertTrue(categories.contains("Tutorials"))
         Assertions.assertTrue(categories.contains("Entertainment"))
         Assertions.assertTrue(categories.contains("Beauty"))

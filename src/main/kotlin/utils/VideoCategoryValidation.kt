@@ -3,7 +3,7 @@ package utils
 object VideoCategoryValidation {
 
     @JvmStatic
-    val categories = setOf ("Gaming", "Music Videos", "Tutorials" , "Entertainment", "Beauty", "Comedy")
+    val categories = setOf ("Gaming", "Music", "Tutorials" , "Entertainment", "Beauty", "Comedy")
 
     @JvmStatic
     fun isValidCategory(categoryToCheck: String?): Boolean {

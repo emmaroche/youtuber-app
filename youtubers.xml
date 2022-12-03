@@ -10,6 +10,8 @@
       <isFavouriteYoutuber>false</isFavouriteYoutuber>
       <videos class="linked-hash-set"/>
       <lastVideoId>0</lastVideoId>
+      <backgroundBrightRed>&#x1b;[41;1m</backgroundBrightRed>
+      <reset>&#x1b;[0m</reset>
     </models.Youtuber>
     <models.Youtuber>
       <youtuberId>1</youtuberId>
@@ -21,6 +23,8 @@
       <isFavouriteYoutuber>false</isFavouriteYoutuber>
       <videos class="linked-hash-set"/>
       <lastVideoId>0</lastVideoId>
+      <backgroundBrightRed>&#x1b;[41;1m</backgroundBrightRed>
+      <reset>&#x1b;[0m</reset>
     </models.Youtuber>
     <models.Youtuber>
       <youtuberId>2</youtuberId>
@@ -32,6 +36,8 @@
       <isFavouriteYoutuber>true</isFavouriteYoutuber>
       <videos class="linked-hash-set"/>
       <lastVideoId>0</lastVideoId>
+      <backgroundBrightRed>&#x1b;[41;1m</backgroundBrightRed>
+      <reset>&#x1b;[0m</reset>
     </models.Youtuber>
   </list>
 </object-stream>
