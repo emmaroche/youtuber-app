@@ -1,6 +1,6 @@
 package utils
 
-import java.util.*
+import java.util.Scanner
 
 object ValidateInput {
     @JvmStatic
@@ -49,7 +49,7 @@ object ValidateInput {
     fun readValidRating(prompt: String?): Int {
         var input = ScannerInput.readNextInt(prompt)
         do {
-            if (Utilities.validRange(input, 1 ,5))
+            if (Utilities.validRange(input, 1, 5))
                 return input
             else {
                 print(" $input is an invalid rating, please choose a rating between 1 & 5.")
@@ -62,7 +62,7 @@ object ValidateInput {
     fun readValidYear(prompt: String?): Int {
         var input = ScannerInput.readNextInt(prompt)
         do {
-            if (Utilities.validRange(input, 2005 ,2022))
+            if (Utilities.validRange(input, 2005, 2022))
                 return input
             else {
                 print(" $input is an invalid date, please choose a date ranging between 2005 & 2022.")
@@ -75,7 +75,7 @@ object ValidateInput {
     fun readValidSubscribers(prompt: String?): Int {
         var input = ScannerInput.readNextInt(prompt)
         do {
-            if (Utilities.validRange(input, 0 ,300000000))
+            if (Utilities.validRange(input, 0, 300000000))
                 return input
             else {
                 print(" $input is an invalid subscriber amount, choose an amount between 0 & 300 million.")
@@ -84,6 +84,3 @@ object ValidateInput {
         } while (true)
     }
 }
-
-
-

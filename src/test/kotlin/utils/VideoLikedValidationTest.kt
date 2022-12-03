@@ -2,22 +2,20 @@ package utils
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import utils.VideoLikedValidation.likedVideo
 import utils.VideoLikedValidation.isValidVideoLikeStatus
-
+import utils.VideoLikedValidation.likedVideo
 
 internal class VideoLikedValidationTest {
 
     @Test
-    fun likedVideoReturnsFulllikedVideoSet(){
+    fun likedVideoReturnsFulllikedVideoSet() {
         Assertions.assertEquals(3, likedVideo.size)
         Assertions.assertTrue(likedVideo.contains("Liked"))
         Assertions.assertTrue(likedVideo.contains("Disliked"))
-
     }
 
     @Test
-    fun isValidVideoLikeStatusTrueWhenCategoryExists(){
+    fun isValidVideoLikeStatusTrueWhenCategoryExists() {
         Assertions.assertTrue(isValidVideoLikeStatus("Liked"))
         Assertions.assertTrue(isValidVideoLikeStatus("LIKED"))
         Assertions.assertTrue(isValidVideoLikeStatus("liked"))
@@ -27,7 +25,7 @@ internal class VideoLikedValidationTest {
     }
 
     @Test
-    fun isValidVideoLikeStatusFalseWhenLikedStatusDoesNotExist(){
+    fun isValidVideoLikeStatusFalseWhenLikedStatusDoesNotExist() {
         Assertions.assertFalse(isValidVideoLikeStatus("likked"))
         Assertions.assertFalse(isValidVideoLikeStatus("dislkie"))
         Assertions.assertFalse(isValidVideoLikeStatus(" "))

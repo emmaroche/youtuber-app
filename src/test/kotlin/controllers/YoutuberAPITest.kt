@@ -113,124 +113,121 @@ class YoutuberAPITest {
         @Test
         fun `deleting a youtuber that exists delete and returns deleted object`() {
             assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
-            assertTrue (populatedYoutubers!!.delete(4))
+            assertTrue(populatedYoutubers!!.delete(4))
             assertEquals(4, populatedYoutubers!!.numberOfYoutubers())
-            assertTrue (populatedYoutubers!!.delete(0))
+            assertTrue(populatedYoutubers!!.delete(0))
             assertEquals(3, populatedYoutubers!!.numberOfYoutubers())
-
         }
     }
 
-        @Nested
-        inner class ListYoutubers {
+    @Nested
+    inner class ListYoutubers {
 
-            @Test
-            fun `listAllYoutubers returns no youtubers stored message when ArrayList is empty`() {
-                assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
-                assertTrue(emptyYoutubers!!.listAllYoutubers().lowercase().contains("no youtubers stored"))
-            }
-
-            @Test
-            fun `listAllYoutubers returns youtubers when ArrayList has youtubers stored`() {
-                assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
-                val youtuberString = populatedYoutubers!!.listAllYoutubers().lowercase()
-                assertTrue(youtuberString.contains("ksi"))
-                assertTrue(youtuberString.contains("pewdiepie"))
-                assertTrue(youtuberString.contains("zerkaa"))
-                assertTrue(youtuberString.contains("molly mae"))
-                assertTrue(youtuberString.contains("mr beast"))
-
-            }
-
-            @Test
-            fun `listFavouriteYoutubers returns no favourite youtubers when ArrayList is empty`() {
-                assertEquals(0, emptyYoutubers!!.numberOfFavouriteYoutubers())
-                assertTrue(
-                    emptyYoutubers!!.listFavouriteYoutubers().lowercase().contains("no youtubers")
-                )
-            }
-
-            @Test
-            fun `listFavouriteYoutubers returns favourite youtubers when ArrayList has favourite youtubers  stored`() {
-                assertEquals(2, populatedYoutubers!!.numberOfFavouriteYoutubers())
-                val favouriteYoutubersString = populatedYoutubers!!.listFavouriteYoutubers().lowercase()
-                assertFalse(favouriteYoutubersString.contains("Molly"))
-                assertFalse(favouriteYoutubersString.contains("Jimmy"))
-            }
-
-            @Test
-            fun `listNonFavouriteYoutubers returns non favourite Youtubers stored when ArrayList is empty`() {
-                assertEquals(0, emptyYoutubers!!.numberOfNonFavouriteYoutubers())
-                assertTrue(
-                    emptyYoutubers!!.listNonFavouriteYoutubers().lowercase().contains("no youtubers")
-                )
-            }
-
-            @Test
-            fun `listNonFavouriteYoutubers returns non favourite Youtubers when ArrayList has non favourite Youtubers youtubers stored`() {
-                assertEquals(3, populatedYoutubers!!.numberOfNonFavouriteYoutubers())
-                val nonFavouriteYoutubersString = populatedYoutubers!!.listNonFavouriteYoutubers().lowercase()
-                assertFalse(nonFavouriteYoutubersString.contains("KSI"))
-                assertFalse(nonFavouriteYoutubersString.contains("PewDiePie"))
-                assertFalse(nonFavouriteYoutubersString.contains("Molly Mae Hague"))
-            }
-
-            @Test
-            fun `listYoutubersInOrderOfSubCount returns no youtubers when ArrayList is empty`() {
-                assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
-                assertTrue(
-                    emptyYoutubers!!.listYoutubersInOrderOfSubCount().lowercase().contains("no youtubers store")
-                )
-            }
-
-            @Test
-            fun `listYoutubersInOrderOfSubCount returns youtubers when ArrayList has youtubers stored`() {
-                assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
-                val subCountOrderString = populatedYoutubers!!.listYoutubersInOrderOfSubCount().lowercase()
-                assertFalse(subCountOrderString.contains("KSI"))
-                assertFalse(subCountOrderString.contains("PewDiePie"))
-                assertFalse(subCountOrderString.contains("ZerkaaPLays"))
-                assertFalse(subCountOrderString.contains("MollyMae"))
-                assertFalse(subCountOrderString.contains("Mr Beast"))
-            }
-
-            @Test
-            fun `listYoutubersFromNewestToOldestChannel returns no youtubers when ArrayList is empty`() {
-                assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
-                assertTrue(
-                    emptyYoutubers!!.listYoutubersFromNewestToOldestChannel().lowercase().contains("no youtubers store")
-                )
-            }
-
-            @Test
-            fun `listYoutubersFromNewestToOldestChannel returns youtubers when ArrayList has youtubers stored`() {
-                assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
-                val subCountOrderString = populatedYoutubers!!.listYoutubersFromNewestToOldestChannel().lowercase()
-                assertFalse(subCountOrderString.contains("KSI"))
-                assertFalse(subCountOrderString.contains("PewDiePie"))
-                assertFalse(subCountOrderString.contains("ZerkaaPLays"))
-                assertFalse(subCountOrderString.contains("MollyMae"))
-                assertFalse(subCountOrderString.contains("Mr Beast"))
-            }
-
-            @Test
-            fun `listWatchedVideos returns the videos marked as watched that are stored when ArrayList is empty`() {
-                assertEquals(0, emptyYoutubers!!.numberOfWatchedVideos())
-                assertTrue(
-                    emptyYoutubers!!.listWatchedVideos().lowercase().contains("no videos")
-                )
-            }
-
-            @Test
-            fun `listWatchedVideos returns the videos marked as watched when ArrayList has non favourite Youtubers youtubers stored`() {
-                assertEquals(0, populatedYoutubers!!.numberOfWatchedVideos())
-                val nonFavouriteYoutubersString = populatedYoutubers!!.listWatchedVideos().lowercase()
-                assertFalse(nonFavouriteYoutubersString.contains("KSI"))
-                assertFalse(nonFavouriteYoutubersString.contains("PewDiePie"))
-                assertFalse(nonFavouriteYoutubersString.contains("Molly Mae Hague"))
-            }
-
+        @Test
+        fun `listAllYoutubers returns no youtubers stored message when ArrayList is empty`() {
+            assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
+            assertTrue(emptyYoutubers!!.listAllYoutubers().lowercase().contains("no youtubers stored"))
         }
+
+        @Test
+        fun `listAllYoutubers returns youtubers when ArrayList has youtubers stored`() {
+            assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+            val youtuberString = populatedYoutubers!!.listAllYoutubers().lowercase()
+            assertTrue(youtuberString.contains("ksi"))
+            assertTrue(youtuberString.contains("pewdiepie"))
+            assertTrue(youtuberString.contains("zerkaa"))
+            assertTrue(youtuberString.contains("molly mae"))
+            assertTrue(youtuberString.contains("mr beast"))
+        }
+
+        @Test
+        fun `listFavouriteYoutubers returns no favourite youtubers when ArrayList is empty`() {
+            assertEquals(0, emptyYoutubers!!.numberOfFavouriteYoutubers())
+            assertTrue(
+                emptyYoutubers!!.listFavouriteYoutubers().lowercase().contains("no youtubers")
+            )
+        }
+
+        @Test
+        fun `listFavouriteYoutubers returns favourite youtubers when ArrayList has favourite youtubers  stored`() {
+            assertEquals(2, populatedYoutubers!!.numberOfFavouriteYoutubers())
+            val favouriteYoutubersString = populatedYoutubers!!.listFavouriteYoutubers().lowercase()
+            assertFalse(favouriteYoutubersString.contains("Molly"))
+            assertFalse(favouriteYoutubersString.contains("Jimmy"))
+        }
+
+        @Test
+        fun `listNonFavouriteYoutubers returns non favourite Youtubers stored when ArrayList is empty`() {
+            assertEquals(0, emptyYoutubers!!.numberOfNonFavouriteYoutubers())
+            assertTrue(
+                emptyYoutubers!!.listNonFavouriteYoutubers().lowercase().contains("no youtubers")
+            )
+        }
+
+        @Test
+        fun `listNonFavouriteYoutubers returns non favourite Youtubers when ArrayList has non favourite Youtubers youtubers stored`() {
+            assertEquals(3, populatedYoutubers!!.numberOfNonFavouriteYoutubers())
+            val nonFavouriteYoutubersString = populatedYoutubers!!.listNonFavouriteYoutubers().lowercase()
+            assertFalse(nonFavouriteYoutubersString.contains("KSI"))
+            assertFalse(nonFavouriteYoutubersString.contains("PewDiePie"))
+            assertFalse(nonFavouriteYoutubersString.contains("Molly Mae Hague"))
+        }
+
+        @Test
+        fun `listYoutubersInOrderOfSubCount returns no youtubers when ArrayList is empty`() {
+            assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
+            assertTrue(
+                emptyYoutubers!!.listYoutubersInOrderOfSubCount().lowercase().contains("no youtubers store")
+            )
+        }
+
+        @Test
+        fun `listYoutubersInOrderOfSubCount returns youtubers when ArrayList has youtubers stored`() {
+            assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+            val subCountOrderString = populatedYoutubers!!.listYoutubersInOrderOfSubCount().lowercase()
+            assertFalse(subCountOrderString.contains("KSI"))
+            assertFalse(subCountOrderString.contains("PewDiePie"))
+            assertFalse(subCountOrderString.contains("ZerkaaPLays"))
+            assertFalse(subCountOrderString.contains("MollyMae"))
+            assertFalse(subCountOrderString.contains("Mr Beast"))
+        }
+
+        @Test
+        fun `listYoutubersFromNewestToOldestChannel returns no youtubers when ArrayList is empty`() {
+            assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
+            assertTrue(
+                emptyYoutubers!!.listYoutubersFromNewestToOldestChannel().lowercase().contains("no youtubers store")
+            )
+        }
+
+        @Test
+        fun `listYoutubersFromNewestToOldestChannel returns youtubers when ArrayList has youtubers stored`() {
+            assertEquals(5, populatedYoutubers!!.numberOfYoutubers())
+            val subCountOrderString = populatedYoutubers!!.listYoutubersFromNewestToOldestChannel().lowercase()
+            assertFalse(subCountOrderString.contains("KSI"))
+            assertFalse(subCountOrderString.contains("PewDiePie"))
+            assertFalse(subCountOrderString.contains("ZerkaaPLays"))
+            assertFalse(subCountOrderString.contains("MollyMae"))
+            assertFalse(subCountOrderString.contains("Mr Beast"))
+        }
+
+        @Test
+        fun `listWatchedVideos returns the videos marked as watched that are stored when ArrayList is empty`() {
+            assertEquals(0, emptyYoutubers!!.numberOfWatchedVideos())
+            assertTrue(
+                emptyYoutubers!!.listWatchedVideos().lowercase().contains("no videos")
+            )
+        }
+
+        @Test
+        fun `listWatchedVideos returns the videos marked as watched when ArrayList has non favourite Youtubers youtubers stored`() {
+            assertEquals(0, populatedYoutubers!!.numberOfWatchedVideos())
+            val nonFavouriteYoutubersString = populatedYoutubers!!.listWatchedVideos().lowercase()
+            assertFalse(nonFavouriteYoutubersString.contains("KSI"))
+            assertFalse(nonFavouriteYoutubersString.contains("PewDiePie"))
+            assertFalse(nonFavouriteYoutubersString.contains("Molly Mae Hague"))
+        }
+    }
 
     @Nested
     inner class FavouriteYoutubers {
@@ -288,7 +285,6 @@ class YoutuberAPITest {
             assertEquals(0, populatedYoutubers!!.numberOfWatchedVideos())
             assertEquals(0, emptyYoutubers!!.numberOfWatchedVideos())
         }
-
     }
 
     @Nested
@@ -409,71 +405,70 @@ class YoutuberAPITest {
     }
 
     @Nested
-        inner class PersistenceTests {
+    inner class PersistenceTests {
 
-            @Test
-            fun `saving and loading an empty collection in XML doesn't crash app`() {
-                // Saving an empty youtubers.XML file.
-                val storingYoutubers = YoutuberAPI(XMLSerializer(File("youtubers.xml")))
-                storingYoutubers.store()
+        @Test
+        fun `saving and loading an empty collection in XML doesn't crash app`() {
+            // Saving an empty youtubers.XML file.
+            val storingYoutubers = YoutuberAPI(XMLSerializer(File("youtubers.xml")))
+            storingYoutubers.store()
 
-                // Loading the empty youtubers.xml file into a new object
-                val loadedYoutubers = YoutuberAPI(XMLSerializer(File("youtubers.xml")))
-                loadedYoutubers.load()
+            // Loading the empty youtubers.xml file into a new object
+            val loadedYoutubers = YoutuberAPI(XMLSerializer(File("youtubers.xml")))
+            loadedYoutubers.load()
 
-                // Comparing the source of the youtubers (storingYoutubers) with the XML loaded youtubers (loadedYoutubers)
-                assertEquals(0, storingYoutubers.numberOfYoutubers())
-                assertEquals(0, loadedYoutubers.numberOfYoutubers())
-                assertEquals(storingYoutubers.numberOfYoutubers(), loadedYoutubers.numberOfYoutubers())
-            }
+            // Comparing the source of the youtubers (storingYoutubers) with the XML loaded youtubers (loadedYoutubers)
+            assertEquals(0, storingYoutubers.numberOfYoutubers())
+            assertEquals(0, loadedYoutubers.numberOfYoutubers())
+            assertEquals(storingYoutubers.numberOfYoutubers(), loadedYoutubers.numberOfYoutubers())
+        }
 
-            @Test
-            fun `saving a loaded collection in XML doesn't lose data`() {
-                // Storing 3 Youtubers to the Youtubers.XML file.
-                val storingYoutubers = YoutuberAPI(XMLSerializer(File("youtubers.xml")))
-                storingYoutubers.add(ksi!!)
-                storingYoutubers.add(pewdiepie!!)
-                storingYoutubers.add(zerkaa!!)
-                storingYoutubers.store()
-            }
+        @Test
+        fun `saving a loaded collection in XML doesn't lose data`() {
+            // Storing 3 Youtubers to the Youtubers.XML file.
+            val storingYoutubers = YoutuberAPI(XMLSerializer(File("youtubers.xml")))
+            storingYoutubers.add(ksi!!)
+            storingYoutubers.add(pewdiepie!!)
+            storingYoutubers.add(zerkaa!!)
+            storingYoutubers.store()
+        }
 
-            @Test
-            fun `saving and loading an empty collection in JSON doesn't crash app`() {
-                // Saving an empty Youtubers.json file.
-                val storingYoutubers = YoutuberAPI(JSONSerializer(File("youtubers.json")))
-                storingYoutubers.store()
+        @Test
+        fun `saving and loading an empty collection in JSON doesn't crash app`() {
+            // Saving an empty Youtubers.json file.
+            val storingYoutubers = YoutuberAPI(JSONSerializer(File("youtubers.json")))
+            storingYoutubers.store()
 
-                // Loading the empty Youtubers.json file into a new object
-                val loadedYoutubers = YoutuberAPI(JSONSerializer(File("youtubers.json")))
-                loadedYoutubers.load()
+            // Loading the empty Youtubers.json file into a new object
+            val loadedYoutubers = YoutuberAPI(JSONSerializer(File("youtubers.json")))
+            loadedYoutubers.load()
 
-                // Comparing the source of the Youtubers (storingYoutubers) with the json loaded Youtubers (loadedYoutubers)
-                assertEquals(0, storingYoutubers.numberOfYoutubers())
-                assertEquals(0, loadedYoutubers.numberOfYoutubers())
-                assertEquals(storingYoutubers.numberOfYoutubers(), loadedYoutubers.numberOfYoutubers())
-            }
+            // Comparing the source of the Youtubers (storingYoutubers) with the json loaded Youtubers (loadedYoutubers)
+            assertEquals(0, storingYoutubers.numberOfYoutubers())
+            assertEquals(0, loadedYoutubers.numberOfYoutubers())
+            assertEquals(storingYoutubers.numberOfYoutubers(), loadedYoutubers.numberOfYoutubers())
+        }
 
-            @Test
-            fun `saving and loading a loaded collection in JSON doesn't lose data`() {
-                // Storing 3 Youtubers to the Youtubers.json file.
-                val storingYoutubers = YoutuberAPI(JSONSerializer(File("youtubers.json")))
-                storingYoutubers.add(ksi!!)
-                storingYoutubers.add(pewdiepie!!)
-                storingYoutubers.add(zerkaa!!)
-                storingYoutubers.store()
+        @Test
+        fun `saving and loading a loaded collection in JSON doesn't lose data`() {
+            // Storing 3 Youtubers to the Youtubers.json file.
+            val storingYoutubers = YoutuberAPI(JSONSerializer(File("youtubers.json")))
+            storingYoutubers.add(ksi!!)
+            storingYoutubers.add(pewdiepie!!)
+            storingYoutubers.add(zerkaa!!)
+            storingYoutubers.store()
 
-                // Loading Youtubers.json into a different collection
-                val loadedYoutubers = YoutuberAPI(JSONSerializer(File("youtubers.json")))
-                loadedYoutubers.load()
+            // Loading Youtubers.json into a different collection
+            val loadedYoutubers = YoutuberAPI(JSONSerializer(File("youtubers.json")))
+            loadedYoutubers.load()
 
-                // Comparing the source of the Youtubers (storingYoutubers) with the json loaded Youtubers (loadedYoutubers)
-                assertEquals(3, storingYoutubers.numberOfYoutubers())
-                assertEquals(3, loadedYoutubers.numberOfYoutubers())
-                assertEquals(storingYoutubers.numberOfYoutubers(), loadedYoutubers.numberOfYoutubers())
-                assertEquals(storingYoutubers.findYoutuber(0), loadedYoutubers.findYoutuber(0))
-                assertEquals(storingYoutubers.findYoutuber(1), loadedYoutubers.findYoutuber(1))
-                assertEquals(storingYoutubers.findYoutuber(2), loadedYoutubers.findYoutuber(2))
-            }
+            // Comparing the source of the Youtubers (storingYoutubers) with the json loaded Youtubers (loadedYoutubers)
+            assertEquals(3, storingYoutubers.numberOfYoutubers())
+            assertEquals(3, loadedYoutubers.numberOfYoutubers())
+            assertEquals(storingYoutubers.numberOfYoutubers(), loadedYoutubers.numberOfYoutubers())
+            assertEquals(storingYoutubers.findYoutuber(0), loadedYoutubers.findYoutuber(0))
+            assertEquals(storingYoutubers.findYoutuber(1), loadedYoutubers.findYoutuber(1))
+            assertEquals(storingYoutubers.findYoutuber(2), loadedYoutubers.findYoutuber(2))
         }
     }
-
+}

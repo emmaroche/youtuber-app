@@ -2,20 +2,19 @@ package utils
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import utils.VideoWatchedStatusValidation.watched
 import utils.VideoWatchedStatusValidation.videoWatchedStatus
+import utils.VideoWatchedStatusValidation.watched
 
 class VideoWatchedStatusValidationTest {
     @Test
-    fun likedVideoReturnsFulllikedVideoSet(){
+    fun likedVideoReturnsFulllikedVideoSet() {
         Assertions.assertEquals(2, watched.size)
         Assertions.assertTrue(watched.contains("Yet to watch"))
         Assertions.assertTrue(watched.contains("Watched"))
-
     }
 
     @Test
-    fun isValidVideoLikeStatusTrueWhenCategoryExists(){
+    fun isValidVideoLikeStatusTrueWhenCategoryExists() {
         Assertions.assertTrue(videoWatchedStatus("Yet to watch"))
         Assertions.assertTrue(videoWatchedStatus("yet to watch"))
         Assertions.assertTrue(videoWatchedStatus("YET TO WATCH"))
@@ -25,7 +24,7 @@ class VideoWatchedStatusValidationTest {
     }
 
     @Test
-    fun isValidVideoLikeStatusFalseWhenLikedStatusDoesNotExist(){
+    fun isValidVideoLikeStatusFalseWhenLikedStatusDoesNotExist() {
         Assertions.assertFalse(videoWatchedStatus("WAchte"))
         Assertions.assertFalse(videoWatchedStatus("yt t watch"))
         Assertions.assertFalse(videoWatchedStatus("watcing"))

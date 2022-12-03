@@ -18,33 +18,33 @@ object Utilities {
     fun formatListString(youtubersToFormat: List<Youtuber>): String =
         youtubersToFormat
             .joinToString(separator = "\n") { youtuber ->
-                        "$brightRed \n" +
-                        "   ###############################                                                         \n" +
-                        "  ###################################                      \n" +
-                        " #####################################                 \n" +
-                        "################  #####################                    \n" +
-                        "################    ###################                    \n" +
-                        "################      #################                  \n" +
-                        "################$reset $bold " + youtuber.youtuberId + " $reset$brightRed    ###############                    \n" +
-                        "################      #################                    \n" +
-                        "################    ###################                    \n" +
-                        "################  ####################                    \n" +
-                        " ####################################                     \n" +
-                        "  ##################################                       \n" +
-                        "   ################################                       \n" +
-                                reset + youtuber.toString()
+                "$brightRed \n" +
+                    "   ###############################                                                         \n" +
+                    "  ###################################                      \n" +
+                    " #####################################                 \n" +
+                    "################  #####################                    \n" +
+                    "################    ###################                    \n" +
+                    "################      #################                  \n" +
+                    "################$reset $bold " + youtuber.youtuberId + " $reset$brightRed    ###############                    \n" +
+                    "################      #################                    \n" +
+                    "################    ###################                    \n" +
+                    "################  ####################                    \n" +
+                    " ####################################                     \n" +
+                    "  ##################################                       \n" +
+                    "   ################################                       \n" +
+                    reset + youtuber.toString()
             }
 
     @JvmStatic
     fun formatSetString(itemsToFormat: MutableSet<Video>): String =
         itemsToFormat
-            .joinToString(separator = "\n") { video ->  "$backgroundBrightRed $reset$red$bold Video ${video.videoId}$reset\n" +
+            .joinToString(separator = "\n") { video ->
+                "$backgroundBrightRed $reset$red$bold Video ${video.videoId}$reset\n" +
                     "$red$bold↳ Title:$reset ${video.videoTitle}\t$red$bold Interaction:$reset ${video.isVideoLiked}\t$red$bold Category:$reset ${video.videoCategory}\t$red$bold Watched status:$reset ${video.watchedStatus}\t$red$bold Rating:$reset ${video.videoRating} \n"
-                     }
+            }
 
     @JvmStatic
     fun validRange(numberToCheck: Int, min: Int, max: Int): Boolean {
         return numberToCheck in min..max
     }
-
 }

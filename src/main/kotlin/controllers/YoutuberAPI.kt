@@ -1,8 +1,8 @@
 package controllers
 
+import models.Youtuber
 import persistence.Serializer
 import utils.Utilities.formatListString
-import models.Youtuber
 
 class YoutuberAPI(serializerType: Serializer) {
 
@@ -55,20 +55,20 @@ class YoutuberAPI(serializerType: Serializer) {
         else formatListString(youtubers)
 
     fun listFavouriteYoutubers(): String =
-        if  (numberOfFavouriteYoutubers() == 0) "\n No YouTubers stored as favourites"
-        else formatListString(youtubers.filter { youtubers -> youtubers.isFavouriteYoutuber})
+        if (numberOfFavouriteYoutubers() == 0) "\n No YouTubers stored as favourites"
+        else formatListString(youtubers.filter { youtubers -> youtubers.isFavouriteYoutuber })
 
     fun listNonFavouriteYoutubers(): String =
-        if  (numberOfNonFavouriteYoutubers() == 0)  "\n No YouTubers stored as non favourites"
-        else formatListString(youtubers.filter { youtubers -> !youtubers.isFavouriteYoutuber})
+        if (numberOfNonFavouriteYoutubers() == 0) "\n No YouTubers stored as non favourites"
+        else formatListString(youtubers.filter { youtubers -> !youtubers.isFavouriteYoutuber })
 
     fun listYoutubersInOrderOfSubCount(): String =
-        if  (youtubers.isEmpty()) "\n No YouTubers stored"
-        else formatListString(youtubers.sortedByDescending { youtubers -> youtubers.youtuberSubscribers})
+        if (youtubers.isEmpty()) "\n No YouTubers stored"
+        else formatListString(youtubers.sortedByDescending { youtubers -> youtubers.youtuberSubscribers })
 
-   fun listYoutubersFromNewestToOldestChannel(): String =
-       if  (numberOfYoutubers() == 0) "\n No YouTubers stored"
-       else formatListString(youtubers.sortedBy { youtubers -> youtubers.youtuberYearJoined})
+    fun listYoutubersFromNewestToOldestChannel(): String =
+        if (numberOfYoutubers() == 0) "\n No YouTubers stored"
+        else formatListString(youtubers.sortedBy { youtubers -> youtubers.youtuberYearJoined })
 
     // ----------------------------------------------
     //  COUNTING METHODS FOR YOUTUBER ARRAYLIST
@@ -77,7 +77,7 @@ class YoutuberAPI(serializerType: Serializer) {
 
     fun numberOfFavouriteYoutubers(): Int = youtubers.count { youtubers: Youtuber -> youtubers.isFavouriteYoutuber }
 
-    fun numberOfNonFavouriteYoutubers(): Int = youtubers.count { youtubers: Youtuber -> !youtubers.isFavouriteYoutuber}
+    fun numberOfNonFavouriteYoutubers(): Int = youtubers.count { youtubers: Youtuber -> !youtubers.isFavouriteYoutuber }
 
     fun numberOfNotesBySubCount(sub: Int): Int = youtubers.count { youtubers: Youtuber -> youtubers.youtuberSubscribers == sub }
 
@@ -86,8 +86,8 @@ class YoutuberAPI(serializerType: Serializer) {
     // ----------------------------------------------
     fun addYoutuberToFavourites(id: Int): Boolean {
         val foundYoutuber = findYoutuber(id)
-        if (( foundYoutuber != null) && (!foundYoutuber.isFavouriteYoutuber)
-        ){
+        if ((foundYoutuber != null) && (!foundYoutuber.isFavouriteYoutuber)
+        ) {
             foundYoutuber.isFavouriteYoutuber = true
             return true
         }
@@ -97,7 +97,7 @@ class YoutuberAPI(serializerType: Serializer) {
     // ----------------------------------------------
     //  SEARCHING/FINDING METHODS FOR YOUTUBER ARRAYLIST
     // ---------------------------------------------
-    fun findYoutuber(youtuberId : Int) =  youtubers.find{ youtuber -> youtuber.youtuberId == youtuberId }
+    fun findYoutuber(youtuberId: Int) = youtubers.find { youtuber -> youtuber.youtuberId == youtuberId }
 
     fun searchYoutuberByChannelName(searchString: String) =
         formatListString(youtubers.filter { youtubers -> youtubers.youtuberChannelName.contains(searchString, ignoreCase = true) })
@@ -105,7 +105,7 @@ class YoutuberAPI(serializerType: Serializer) {
     fun searchYoutuberBySubCount(sub: Int): String =
         if (youtubers.isEmpty()) "\n No YouTubers found"
         else {
-            val listOfSubs = formatListString(youtubers.filter{ youtubers -> youtubers.youtuberSubscribers >= sub})
+            val listOfSubs = formatListString(youtubers.filter { youtubers -> youtubers.youtuberSubscribers >= sub })
             if (listOfSubs == "") "\n No YouTubers with $sub or more subscribers found\n"
             else "\n ${numberOfNotesBySubCount(sub)} Youtubers(s) with $sub or more subscribers\n: $listOfSubs"
         }
@@ -120,7 +120,7 @@ class YoutuberAPI(serializerType: Serializer) {
             for (youtube in youtubers) {
                 for (video in youtube.videos) {
                     if (video.markVideoAsWatched) {
-                        listOfWatched +=  youtube.youtuberChannelName + ": " + video.videoTitle + ": " + video.watchedStatus + "\n"
+                        listOfWatched += youtube.youtuberChannelName + ": " + video.videoTitle + ": " + video.watchedStatus + "\n"
                     }
                 }
             }
@@ -190,5 +190,4 @@ class YoutuberAPI(serializerType: Serializer) {
     fun store() {
         serializer.write(youtubers)
     }
-
 }
