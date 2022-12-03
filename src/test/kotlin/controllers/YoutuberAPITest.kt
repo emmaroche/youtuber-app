@@ -224,7 +224,6 @@ class YoutuberAPITest {
             )
         }
 
-
         @Test
         fun `listWatchedVideos returns the videos marked as watched when ArrayList has non-favourite Youtubers stored`() {
             assertEquals(0, populatedYoutubers!!.numberOfWatchedVideos())
@@ -233,7 +232,6 @@ class YoutuberAPITest {
             assertFalse(watchedYoutubersString.contains("KSI"))
             assertFalse(watchedYoutubersString.contains("PewDiePie"))
             assertFalse(watchedYoutubersString.contains("Molly Mae Hague"))
-
         }
     }
 
@@ -384,8 +382,6 @@ class YoutuberAPITest {
             val titleString = populatedYoutubers!!.searchVideoByTitle("No Time - Official Music Video").lowercase()
             assertFalse(titleString.contains("No Time - Official Music Video"))
             assertTrue(titleString.contains("official"))
-
-
         }
 
         @Test
@@ -420,7 +416,6 @@ class YoutuberAPITest {
             val title1String = populatedYoutubers!!.searchVideoByCategory("Music").lowercase()
             assertTrue(title1String.contains("music"))
             assertFalse(title1String.contains("Music"))
-
         }
     }
 
