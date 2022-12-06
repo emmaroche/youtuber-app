@@ -79,7 +79,10 @@ fun runMenu() {
             5 -> searchingMenu()
             6 -> videoMenu()
             7 -> addYoutuberToFav()
-            8 -> info()
+            8 -> save()
+            9 -> load()
+
+            10 -> info()
 
 //            -99 -> dummyData()
             0 -> exitApp()
@@ -115,8 +118,10 @@ fun mainMenu(): Int {
          >$bold 5 $red➮$reset Search Youtubers
          >$bold 6 $red➮$reset YouTuber Videos MENU
          >$bold 7 $red➮$reset Add YouTuber to Favourites List
-         >                      
-         >$bold 8 $red➮$reset About this App
+         >$bold 8 $red➮$reset Save a YouTuber   
+         >$bold 9 $red➮$reset Load a YouTuber
+         >                 
+         >$bold 10 $red➮$reset About this App
          >                     
          >$bold 0 $red➮$reset Exit App           
          >                       
@@ -598,21 +603,22 @@ private fun askUserToChooseVideo(youtuber: Youtuber): Video? {
     }
 }
 
-// fun dummyData() {
-//    youtuberAPI.create(Youtuber(0, "Jj Olatunji", "KSI", 2011, 160000,
-//        subscribedToYoutuber = true,
-//        isFavouriteYoutuber = true
-//    ))
-//    youtuberAPI.create(Youtuber(1, "Jimmy Donaldson", "Mr Beast", 2012, 1500000000,
-//        subscribedToYoutuber = false,
-//        isFavouriteYoutuber = false
-//    ))
-//    youtuberAPI.create(Youtuber(2, "Darren Wadkins", "IShowSpeed", 2016, 1209000,
-//        subscribedToYoutuber = true,
-//        isFavouriteYoutuber = true
-//    ))
-//    youtuberAPI.create(Youtuber(3, "Joshua Bradley", "ZerkaaHD", 2013, 3000300,
-//        subscribedToYoutuber = false,
-//        isFavouriteYoutuber = false
-//    ))
-// }
+// ----------------------------------------------
+//  SAVE AND LOAD YOUTUBERS
+// ---------------------------------------------
+
+fun save() {
+    try {
+        youtuberAPI.store()
+    } catch (e: Exception) {
+        System.err.println("\n Error writing to file: $e")
+    }
+}
+
+fun load() {
+    try {
+        youtuberAPI.load()
+    } catch (e: Exception) {
+        System.err.println("\n Error reading from file: $e")
+    }
+}

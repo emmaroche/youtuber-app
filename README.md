@@ -80,7 +80,7 @@ The colour theme of this app is simply red and white. The red, bright red and ba
 
 <img width="567" alt="Screenshot 2022-12-03 at 18 06 39" src="https://user-images.githubusercontent.com/78028777/205455505-009350df-708e-48a0-a146-089c9f5aeb4a.png">
 
-A welcome page was added that appears before the main menu. This was added as an introduction/ease in to the app rather than going straight in with a main menu that can be overwhelming to a user as the first screen they see. Once the user is ready to move on from this screen they can click any number key followed by the enter key on their key board to get started.
+A welcome page was added that appears before the main menu. This was added as an introduction/ease in to the app rather than going straight in with a main menu that can be overwhelming to a user as the first screen they see. Once the user is ready to move on from this screen they can click any number key followed by the enter key on their keyboard to get started.
 
 **Main menu**
 
@@ -110,7 +110,7 @@ This is the video sub menu, it has 8 options and an exit option to choose from. 
 
 <img width="1018" alt="Screenshot 2022-12-03 at 18 35 04" src="https://user-images.githubusercontent.com/78028777/205456462-d7f89a81-88ad-4f36-bcd0-f585113fd121.png">
 
-This is a screen that gives users some information about the app. A ASCII YouTube logo was generated from https://manytools.org/hacker-tools/convert-images-to-ascii-art/go/ was used to go at the top of the about page that includes the about page heading inside.
+This is a screen that gives users some information about the app. An ASCII YouTube logo was generated from https://manytools.org/hacker-tools/convert-images-to-ascii-art/go/ was used to go at the top of the about page that includes the about page heading inside.
 
 **Listing a Youtuber that has a video added to them is displayed like so:**
 

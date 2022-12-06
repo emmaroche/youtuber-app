@@ -23,11 +23,6 @@ class YoutuberAPI(serializerType: Serializer) {
         return youtubers.add(youtuber)
     }
 
-//    fun create(youtuber: Youtuber) {
-//        youtuber.youtuberId = getId()
-//        youtubers.add(youtuber)
-//    }
-
     fun update(id: Int, youtuber: Youtuber?): Boolean {
         // find the youtuber object by the ID
         val foundYoutuber = findYoutuber(id)
@@ -79,7 +74,7 @@ class YoutuberAPI(serializerType: Serializer) {
 
     fun numberOfNonFavouriteYoutubers(): Int = youtubers.count { youtubers: Youtuber -> !youtubers.isFavouriteYoutuber }
 
-    fun numberOfNotesBySubCount(sub: Int): Int = youtubers.count { youtubers: Youtuber -> youtubers.youtuberSubscribers == sub }
+    fun numberOfYoutubersBySubCount(sub: Int): Int = youtubers.count { youtubers: Youtuber -> youtubers.youtuberSubscribers == sub }
 
     // ----------------------------------------------
     //  ADD YOUTUBER TO FAVOURITES METHOD
@@ -107,7 +102,7 @@ class YoutuberAPI(serializerType: Serializer) {
         else {
             val listOfSubs = formatListString(youtubers.filter { youtubers -> youtubers.youtuberSubscribers >= sub })
             if (listOfSubs == "") "\n No YouTubers with $sub or more subscribers found\n"
-            else "\n ${numberOfNotesBySubCount(sub)} Youtubers(s) with $sub or more subscribers\n: $listOfSubs"
+            else "\n ${numberOfYoutubersBySubCount(sub)} Youtubers(s) with $sub or more subscribers\n: $listOfSubs"
         }
 
     // ----------------------------------------------

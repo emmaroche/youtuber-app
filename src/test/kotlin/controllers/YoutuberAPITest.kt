@@ -27,7 +27,7 @@ class YoutuberAPITest {
     @BeforeEach
     fun setup() {
         ksi = Youtuber(0, "Jj Olatunji", "KSI", 2011, 16000000, false, false)
-        musicVideo = Video(0, "No Time - Official Music Video", "Yes", "Music", "Watching", 4, false)
+        musicVideo = Video(0, "No Time - Official Music Video", "Yes", "Music", "Watching", 4, true)
         pewdiepie = Youtuber(1, "Felix Kjellberg", "PewDiePie", 2010, 111000000, false, false)
         zerkaa = Youtuber(2, "Josh Bradley", "ZerkaaPLays", 2012, 2800000, true, true)
         mollyMae = Youtuber(3, "Molly Mae Hague", "MollyMae", 2016, 1700000, false, false)
@@ -218,7 +218,7 @@ class YoutuberAPITest {
 
         @Test
         fun `listWatchedVideos returns the videos marked as watched that are stored when ArrayList is empty`() {
-            assertEquals(0, emptyYoutubers!!.numberOfWatchedVideos())
+            assertEquals(0, emptyYoutubers!!.numberOfYoutubers())
             assertTrue(
                 emptyYoutubers!!.listWatchedVideos().lowercase().contains("no videos")
             )
@@ -226,10 +226,9 @@ class YoutuberAPITest {
 
         @Test
         fun `listWatchedVideos returns the videos marked as watched when ArrayList has non-favourite Youtubers stored`() {
-            assertEquals(0, populatedYoutubers!!.numberOfWatchedVideos())
-            assertEquals(1, ksi!!.numberOfVideos())
+            assertEquals(1, populatedYoutubers!!.numberOfWatchedVideos())
             val watchedYoutubersString = populatedYoutubers!!.listWatchedVideos().lowercase()
-            assertFalse(watchedYoutubersString.contains("KSI"))
+            assertTrue(watchedYoutubersString.contains("ksi"))
             assertFalse(watchedYoutubersString.contains("PewDiePie"))
             assertFalse(watchedYoutubersString.contains("Molly Mae Hague"))
         }
@@ -238,13 +237,13 @@ class YoutuberAPITest {
     @Nested
     inner class FavouriteYoutubers {
         @Test
-        fun `favouriting a note that does not exist returns false`() {
+        fun `favouriting a youtuber that does not exist returns false`() {
             assertFalse(populatedYoutubers!!.addYoutuberToFavourites(6))
             assertFalse(populatedYoutubers!!.addYoutuberToFavourites(-1))
         }
 
         @Test
-        fun `favouriting an already favourited note returns false`() {
+        fun `favouriting an already favourited youtuber returns false`() {
             assertTrue(populatedYoutubers!!.findYoutuber(2)!!.isFavouriteYoutuber)
             assertFalse(populatedYoutubers!!.addYoutuberToFavourites(2))
         }
@@ -272,23 +271,23 @@ class YoutuberAPITest {
             assertEquals(0, emptyYoutubers!!.numberOfNonFavouriteYoutubers())
         }
         @Test
-        fun numberOfFavouriteYoutubersNotesCalculatedCorrectly() {
+        fun numberOfFavouriteYoutubersCalculatedCorrectly() {
             assertEquals(2, populatedYoutubers!!.numberOfFavouriteYoutubers())
             assertEquals(0, emptyYoutubers!!.numberOfFavouriteYoutubers())
         }
         @Test
-        fun numberOfNotesBySubCountCalculatedCorrectly() {
-            assertEquals(1, populatedYoutubers!!.numberOfNotesBySubCount(16000000))
-            assertEquals(0, populatedYoutubers!!.numberOfNotesBySubCount(3))
-            assertEquals(1, populatedYoutubers!!.numberOfNotesBySubCount(111000000))
-            assertEquals(0, populatedYoutubers!!.numberOfNotesBySubCount(4))
-            assertEquals(1, populatedYoutubers!!.numberOfNotesBySubCount(1700000))
-            assertEquals(0, emptyYoutubers!!.numberOfNotesBySubCount(1))
+        fun numberOfYoutubersBySubCountCalculatedCorrectly() {
+            assertEquals(1, populatedYoutubers!!.numberOfYoutubersBySubCount(16000000))
+            assertEquals(0, populatedYoutubers!!.numberOfYoutubersBySubCount(3))
+            assertEquals(1, populatedYoutubers!!.numberOfYoutubersBySubCount(111000000))
+            assertEquals(0, populatedYoutubers!!.numberOfYoutubersBySubCount(4))
+            assertEquals(1, populatedYoutubers!!.numberOfYoutubersBySubCount(1700000))
+            assertEquals(0, emptyYoutubers!!.numberOfYoutubersBySubCount(1))
         }
 
         @Test
         fun numberOfWatchedVideosCalculatedCorrectly() {
-            assertEquals(0, populatedYoutubers!!.numberOfWatchedVideos())
+            assertEquals(1, populatedYoutubers!!.numberOfWatchedVideos())
             assertEquals(0, emptyYoutubers!!.numberOfWatchedVideos())
             assertEquals(0, emptyYoutubers!!.numberOfWatchedVideos())
         }
