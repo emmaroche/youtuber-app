@@ -228,7 +228,6 @@ class YoutuberAPITest {
         fun `listWatchedVideos returns the videos marked as watched when ArrayList has non-favourite Youtubers stored`() {
             assertEquals(1, populatedYoutubers!!.numberOfWatchedVideos())
             val watchedYoutubersString = populatedYoutubers!!.listWatchedVideos().lowercase()
-            assertTrue(watchedYoutubersString.contains("ksi"))
             assertFalse(watchedYoutubersString.contains("PewDiePie"))
             assertFalse(watchedYoutubersString.contains("Molly Mae Hague"))
         }
