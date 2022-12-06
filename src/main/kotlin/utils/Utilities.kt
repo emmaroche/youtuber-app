@@ -53,7 +53,7 @@ object Utilities {
     fun formatSetString(itemsToFormat: MutableSet<Video>): String =
         itemsToFormat
             .joinToString(separator = "\n") { video ->
-                "$backgroundBrightRed $reset$red$bold Video ${video.videoId}$reset\n" +
+                "\n$backgroundBrightRed $reset$red$bold Video ${video.videoId}$reset\n" +
                     "$red$bold↳ Title:$reset ${video.videoTitle}\t$red$bold Interaction:$reset ${video.isVideoLiked}\t$red$bold Category:$reset ${video.videoCategory}\t$red$bold Watched status:$reset ${video.watchedStatus}\t$red$bold Rating:$reset ${video.videoRating} \n"
             }
 

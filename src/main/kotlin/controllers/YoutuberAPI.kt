@@ -157,7 +157,7 @@ class YoutuberAPI(serializerType: Serializer) {
         else {
             val listOfSubs = formatListString(youtubers.filter { youtubers -> youtubers.youtuberSubscribers >= sub })
             if (listOfSubs == "") "\n No YouTubers with $sub or more subscribers found\n"
-            else "\n ${numberOfYoutubersBySubCount(sub)} Youtubers(s) with $sub or more subscribers\n: $listOfSubs"
+            else "\n $listOfSubs"
         }
 
     // ----------------------------------------------
@@ -167,13 +167,20 @@ class YoutuberAPI(serializerType: Serializer) {
      * This function is for listing the watched Videos in an arraylist by title.
      */
     fun listWatchedVideos(): String =
+
         if (numberOfYoutubers() == 0) "\n No videos stored"
         else {
+            // displays the colour
+            val red = "\u001b[31m"
+            // displays the decoration
+            val bold = "\u001b[1m"
+            // resets colour and decoration back to what it previously was
+            val reset = "\u001b[0m"
             var listOfWatched = " "
             for (youtube in youtubers) {
                 for (video in youtube.videos) {
                     if (video.markVideoAsWatched) {
-                        listOfWatched += youtube.youtuberChannelName + ": " + video.videoTitle + ": " + video.watchedStatus + "\n"
+                        listOfWatched += "$red$bold" + video.videoTitle + "$reset: " + video.watchedStatus + "\n"
                     }
                 }
             }
@@ -187,13 +194,21 @@ class YoutuberAPI(serializerType: Serializer) {
      * This function is for searching for a Video in an arraylist by title.
      */
     fun searchVideoByTitle(searchString: String): String {
+        // displays the colour
+        val red = "\u001b[31m"
+        val backgroundBrightRed = "\u001b[41;1m"
+        // displays the decoration
+        val bold = "\u001b[1m"
+        // resets colour and decoration back to what it previously was
+        val reset = "\u001b[0m"
         return if (numberOfYoutubers() == 0) "\n No videos stored"
         else {
             var listOfCats = ""
             for (youtube in youtubers) {
                 for (video in youtube.videos) {
                     if (video.videoTitle.contains(searchString, ignoreCase = true)) {
-                        listOfCats += "${video}\n"
+                        listOfCats += "\n$backgroundBrightRed $reset$red$bold Video ${video.videoId}$reset\n" +
+                            "$red$bold↳ Title:$reset ${video.videoTitle}\t$red$bold Interaction:$reset ${video.isVideoLiked}\t$red$bold Category:$reset ${video.videoCategory}\t$red$bold Watched status:$reset ${video.watchedStatus}\t$red$bold Rating:$reset ${video.videoRating} \n"
                     }
                 }
             }
@@ -206,13 +221,21 @@ class YoutuberAPI(serializerType: Serializer) {
      * This function is for searching for a Video in an arraylist by category.
      */
     fun searchVideoByCategory(searchString: String): String {
+        // displays the colour
+        val red = "\u001b[31m"
+        val backgroundBrightRed = "\u001b[41;1m"
+        // displays the decoration
+        val bold = "\u001b[1m"
+        // resets colour and decoration back to what it previously was
+        val reset = "\u001b[0m"
         return if (numberOfYoutubers() == 0) "\n No videos stored"
         else {
             var listOfCats = ""
             for (youtube in youtubers) {
                 for (video in youtube.videos) {
                     if (video.videoCategory.contains(searchString, ignoreCase = true)) {
-                        listOfCats += "${video}\n"
+                        listOfCats += "\n$backgroundBrightRed $reset$red$bold Video ${video.videoId}$reset\n" +
+                            "$red$bold↳ Title:$reset ${video.videoTitle}\t$red$bold Interaction:$reset ${video.isVideoLiked}\t$red$bold Category:$reset ${video.videoCategory}\t$red$bold Watched status:$reset ${video.watchedStatus}\t$red$bold Rating:$reset ${video.videoRating} \n"
                     }
                 }
             }

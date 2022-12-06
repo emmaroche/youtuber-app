@@ -47,7 +47,7 @@ fun welcomeMenu() {
 fun welcomeScreen(): Int {
 
     // code reference for adding colour to improve UI: https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html#rich-text
-    // code reference for the menu titles made with ASCII to improve UI: https://patorjk.com/software/taag/#p=display&f=Graceful&t=Youtuber%20app%20menu
+    // reference for the menu titles made with ASCII to improve UI: https://patorjk.com/software/taag/#p=display&f=Graceful&t=Youtuber%20app%20menu
 
     // displays the colour
     val red = "\u001b[31m"
@@ -589,6 +589,8 @@ fun searchVideosByCategory() {
  */
 fun info() {
 
+    // reference for the generated ASCII image of the YouTube logo to improve the UI: https://manytools.org/hacker-tools/convert-images-to-ascii-art/go/
+
     // displays the colour
     val brightRed = "\u001b[31;1m"
     // resets colour and decoration back to what it previously was
@@ -636,7 +638,7 @@ fun info() {
 // EXIT APP
 // ------------------------------------
 /**
- * This function is for exitings the app.
+ * This function is for exiting the app.
  */
 fun exitApp() {
     println("\n Exiting app ... Thank you for using! :)")
