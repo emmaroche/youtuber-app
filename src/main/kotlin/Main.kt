@@ -19,12 +19,19 @@ import kotlin.system.exitProcess
 
 private val youtuberAPI = YoutuberAPI(JSONSerializer(File("youtubers.json")))
 
+/**
+ * This class's single responsibility is to manage the user I/O.
+ *
+ * @author Emma Roche
+ */
 fun main() = welcomeMenu()
 
 // ------------------------------------
 // APP WELCOME SCREEN
 // ------------------------------------
-
+/**
+ * This function is a menu option list for welcoming a user to the YouTuber App.
+ */
 fun welcomeMenu() {
     do {
         when (welcomeScreen()) {
@@ -34,6 +41,9 @@ fun welcomeMenu() {
     } while (true)
 }
 
+/**
+ * This function is a welcome screen that the users will see as soon as this app is run.
+ */
 fun welcomeScreen(): Int {
 
     // code reference for adding colour to improve UI: https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html#rich-text
@@ -68,7 +78,9 @@ fun welcomeScreen(): Int {
 // ------------------------------------
 // APP MAIN MENU
 // ------------------------------------
-
+/**
+ * This function shows the options that a user can choose for the main menu.
+ */
 fun runMenu() {
     do {
         when (val option = mainMenu()) {
@@ -91,6 +103,9 @@ fun runMenu() {
     } while (true)
 }
 
+/**
+ * This function is a main menu screen that the users will see after the welcome screen.
+ */
 fun mainMenu(): Int {
 
     // displays the colour
@@ -132,7 +147,9 @@ fun mainMenu(): Int {
 // ------------------------------------
 // APP LISTING MENU
 // ------------------------------------
-
+/**
+ * This function is a listing menu screen that gives a user options for what YouTuber lists they can do.
+ */
 fun listingMenu() {
 
     // displays the colour
@@ -178,7 +195,9 @@ fun listingMenu() {
 // ------------------------------------
 // APP SEARCHING MENU
 // ------------------------------------
-
+/**
+ * This function is a searching menu screen that gives a user options for what YouTuber searches they can do.
+ */
 fun searchingMenu() {
 
     // displays the colour
@@ -218,7 +237,9 @@ fun searchingMenu() {
 // ------------------------------------
 // APP VIDEO MENU
 // ------------------------------------
-
+/**
+ * This function is a video menu screen that gives a user options for what videos CRUD, lists and searches they can d.
+ */
 fun videoMenu() {
 
     // displays the colour
@@ -270,8 +291,9 @@ fun videoMenu() {
 // ------------------------------------
 // MENU CRUD
 // ------------------------------------
-
-// Add youtuber
+/**
+ * This function is for adding a YouTuber.
+ */
 fun addYoutuber() {
     val youtuberName = readNextLine("\n Enter the name of the YouTuber you would like to add: ")
     val youtuberChannelName = readNextLine(" Enter their YouTube channel name: ")
@@ -288,7 +310,9 @@ fun addYoutuber() {
     }
 }
 
-// Add video
+/**
+ * This function is for adding a Video to a YouTuber.
+ */
 private fun addVideoToYoutuber() {
     val video: Youtuber? = askUserToChooseYoutuber()
     if (video != null) {
@@ -307,10 +331,14 @@ private fun addVideoToYoutuber() {
     }
 }
 
-// List all youtubers
+/**
+ * This function is for listing all YouTubers.
+ */
 fun listAllYoutubers() = println(youtuberAPI.listAllYoutubers())
 
-// List videos
+/**
+ * This function is for listing Videos linked to a YouTubers.
+ */
 fun listYoutuberVideos() {
     val video: Youtuber? = askUserToChooseYoutuber()
     if (video != null) {
@@ -318,7 +346,9 @@ fun listYoutuberVideos() {
     } else println("\n Unable to list YouTubers at this moment, please try again later!")
 }
 
-// Update youtuber
+/**
+ * This function is for updating all YouTubers.
+ */
 fun updateYoutuber() {
     listAllYoutubers()
     if (youtuberAPI.numberOfYoutubers() > 0) {
@@ -344,7 +374,9 @@ fun updateYoutuber() {
     }
 }
 
-// Update video
+/**
+ * This function is for updating Videos.
+ */
 fun updateVideoContents() {
     val youtuber: Youtuber? = askUserToChooseYoutuber()
     if (youtuber != null) {
@@ -376,7 +408,9 @@ fun updateVideoContents() {
     }
 }
 
-// Delete youtuber
+/**
+ * This function is for deleting YouTubers.
+ */
 fun deleteYoutuber() {
     listAllYoutubers()
     if (youtuberAPI.numberOfYoutubers() > 0) {
@@ -392,7 +426,9 @@ fun deleteYoutuber() {
     }
 }
 
-// Delete video
+/**
+ * This function is for deleting Videos.
+ */
 fun deleteAVideo() {
     val youtuber: Youtuber? = askUserToChooseYoutuber()
     if (youtuber != null) {
@@ -411,6 +447,9 @@ fun deleteAVideo() {
 // ------------------------------------
 // ADD YOUTUBER TO FAVOURITES
 // ------------------------------------
+/**
+ * This function is for adding a YiuTuber to favourites.
+ */
 fun addYoutuberToFav() {
     listAllYoutubers()
     if (youtuberAPI.numberOfYoutubers() > 0) {
@@ -428,7 +467,9 @@ fun addYoutuberToFav() {
 // ------------------------------------
 // MARKING A VIDEO AS WATCHED
 // ------------------------------------
-
+/**
+ * This function is for marking a video as watched.
+ */
 fun markVideoAsWatched() {
     val youtube: Youtuber? = askUserToChooseYoutuber()
     if (youtube != null) {
@@ -453,20 +494,29 @@ fun markVideoAsWatched() {
 // --------------------------------------------
 // MORE INVOLVED LISTING METHODS
 // --------------------------------------------
-
-// List non-favourite youtubers
+/**
+ * This function is for listing non-favourite YouTubers.
+ */
 fun listNFYoutubers() = println(youtuberAPI.listNonFavouriteYoutubers())
 
-// List favourite youtubers
+/**
+ * This function is for listing favourite YouTubers.
+ */
 fun listFYoutubers() = println(youtuberAPI.listFavouriteYoutubers())
 
-// List YouTubers in order of highest to the lowest subscriber count
+/**
+ * This function is for listing YouTubers in order of highest to the lowest subscriber count.
+ */
 fun listInSubOrder() = println(youtuberAPI.listYoutubersInOrderOfSubCount())
 
-// List YouTubers in order of old-new channels based on the year they joined
+/**
+ * This function is for listing YouTubers in order of old-new channels based on the year they joined.
+ */
 fun listNewToOldChannels() = println(youtuberAPI.listYoutubersFromNewestToOldestChannel())
 
-// list watched videos
+/**
+ * This function is for listing videos marked as watched.
+ */
 fun listWatchedVideos() {
     if (youtuberAPI.numberOfWatchedVideos() > 0) {
         println("\n Total watched videos: ${youtuberAPI.numberOfWatchedVideos()}")
@@ -477,6 +527,9 @@ fun listWatchedVideos() {
 // ------------------------------------
 // SEARCHING METHODS
 // ------------------------------------
+/**
+ * This function is for searching YouTubers by channel name.
+ */
 fun searchYoutuberByChannel() {
 
     val searchTitle = readNextLine("\n Search for channel name: ")
@@ -488,6 +541,9 @@ fun searchYoutuberByChannel() {
     }
 }
 
+/**
+ * This function is for searching YouTubers by subscriber count.
+ */
 fun searchYoutuberBySubCount() {
 
     val searchSubCount = readNextInt("\n Enter the subscriber count to search by ")
@@ -499,7 +555,9 @@ fun searchYoutuberBySubCount() {
     }
 }
 
-// search videos by title
+/**
+ * This function is for searching videos by title.
+ */
 fun searchVideosByTitle() {
     val searchContents = readNextLine("\n Enter the video title to search by: ")
     val searchResults = youtuberAPI.searchVideoByTitle(searchContents)
@@ -510,7 +568,9 @@ fun searchVideosByTitle() {
     }
 }
 
-// search videos by category
+/**
+ * This function is for searching videos by category.
+ */
 fun searchVideosByCategory() {
     val searchContents = readNextLine("\n Enter the video category to search by: ")
     val searchResults = youtuberAPI.searchVideoByCategory(searchContents)
@@ -524,6 +584,9 @@ fun searchVideosByCategory() {
 // ------------------------------------
 // INFO PAGE
 // ------------------------------------
+/**
+ * This function is an 'about the app' screen that provides information on the app.
+ */
 fun info() {
 
     // displays the colour
@@ -572,6 +635,9 @@ fun info() {
 // ------------------------------------
 // EXIT APP
 // ------------------------------------
+/**
+ * This function is for exitings the app.
+ */
 fun exitApp() {
     println("\n Exiting app ... Thank you for using! :)")
     exitProcess(0)
@@ -580,6 +646,9 @@ fun exitApp() {
 // ------------------------------------
 // HELPER FUNCTIONS
 // ------------------------------------
+/**
+ * This function is for asking users to choose a Youtuber.
+ */
 private fun askUserToChooseYoutuber(): Youtuber? {
     listAllYoutubers()
     if (youtuberAPI.numberOfYoutubers() > 0) {
@@ -593,6 +662,9 @@ private fun askUserToChooseYoutuber(): Youtuber? {
     return null
 }
 
+/**
+ * This function is for asking users to choose a video linked to a YouTuber.
+ */
 private fun askUserToChooseVideo(youtuber: Youtuber): Video? {
     return if (youtuber.numberOfVideos() > 0) {
         print(youtuber.listVideos())
@@ -607,6 +679,9 @@ private fun askUserToChooseVideo(youtuber: Youtuber): Video? {
 //  SAVE AND LOAD YOUTUBERS
 // ---------------------------------------------
 
+/**
+ * This function is for saving YouTubers.
+ */
 fun save() {
     try {
         youtuberAPI.store()
@@ -615,6 +690,9 @@ fun save() {
     }
 }
 
+/**
+ * This function is for loading in YouTubers.
+ */
 fun load() {
     try {
         youtuberAPI.load()

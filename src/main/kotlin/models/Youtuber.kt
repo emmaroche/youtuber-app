@@ -2,6 +2,12 @@ package models
 
 import utils.Utilities.formatSetString
 
+/**
+ * This class provides a YouTuber model for one YouTuber ( main responsibility is to manage one YouTuber)
+ * This class also responsible for managing an ArrayList of Video objects.
+ *
+ * @author Emma Roche
+ */
 data class Youtuber(
     var youtuberId: Int = 0,
     var youtuberName: String,
@@ -20,21 +26,36 @@ data class Youtuber(
     // ----------------------------------------------
     //  CRUD METHODS
     // ----------------------------------------------
+    /**
+     * This function is for adding a Video to the arraylist.
+     */
     fun addVideo(video: Video): Boolean {
         video.videoId = getVideoId()
         return videos.add(video)
     }
 
+    /**
+     * This function is for counting the number of Videos in the arraylist.
+     */
     fun numberOfVideos() = videos.size
 
+    /**
+     * This function is for finding a Video in the arraylist.
+     */
     fun findOne(id: Int): Video? {
         return videos.find { video -> video.videoId == id }
     }
 
+    /**
+     * This function is for deleting a Video in the arraylist.
+     */
     fun delete(id: Int): Boolean {
         return videos.removeIf { video -> video.videoId == id }
     }
 
+    /**
+     * This function is for updating a Video in the arraylist.
+     */
     fun update(id: Int, newVideo: Video): Boolean {
         val foundVideo = findOne(id)
 
@@ -59,6 +80,9 @@ data class Youtuber(
     // resets colour and decoration back to what it previously was
     private val reset = "\u001b[0m"
 
+    /**
+     * This function is for listing a Video in the arraylist.
+     */
     fun listVideos() =
         if (videos.isEmpty()) "$backgroundBrightRed $reset No videos added to this YouTuber"
         else formatSetString(videos)
@@ -66,7 +90,9 @@ data class Youtuber(
     // ----------------------------------------------
     //  MARK VIDEO AS WATCHED METHOD
     // ----------------------------------------------
-
+    /**
+     * This function is for marking a Video in an arraylist as watched.
+     */
     fun markingVideoAsWatched(id: Int): Boolean {
         val foundVideo = findOne(id)
         if ((foundVideo != null) && (!foundVideo.markVideoAsWatched)) {
@@ -78,6 +104,9 @@ data class Youtuber(
         return false
     }
 
+    /**
+     * This function is for formatting how a YouTuber is listed.
+     */
     override fun toString(): String {
 
         // displays the colour

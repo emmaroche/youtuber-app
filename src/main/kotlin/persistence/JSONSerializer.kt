@@ -7,6 +7,11 @@ import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 
+/**
+ * This class provides a JSONSerializer
+ *
+ * @author Emma Roche
+ */
 class JSONSerializer(private val file: File) : Serializer {
 
     @Throws(Exception::class)

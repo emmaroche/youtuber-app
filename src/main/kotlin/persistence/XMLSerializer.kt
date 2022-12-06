@@ -9,6 +9,11 @@ import java.io.FileWriter
 import java.lang.Exception
 import kotlin.Throws
 
+/**
+ * This class provides a XMLSerializer
+ *
+ * @author Emma Roche
+ */
 class XMLSerializer(private val file: File) : Serializer {
 
     @Throws(Exception::class)
