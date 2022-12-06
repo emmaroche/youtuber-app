@@ -16,7 +16,7 @@
           <videoCategory>Music</videoCategory>
           <watchedStatus>Watching</watchedStatus>
           <videoRating>4</videoRating>
-          <markVideoAsWatched>false</markVideoAsWatched>
+          <markVideoAsWatched>true</markVideoAsWatched>
         </models.Video>
       </videos>
       <lastVideoId>1</lastVideoId>
