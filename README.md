@@ -44,6 +44,17 @@ In this app, you are be able to:
 
 Issue - Branch - Commit(s) - Push - Pull Request - Merge - Close Issue - Delete Branch
 
+## GitHub Actions
+
+GitHub Actions were used to create a default workflow in this youtuber-app repository
+
+This default workflow will generate:
+
+* An artifact of a "fat" jar with dependencies
+* A zip file containing the Dokka KDoc documentation website
+* A zip file containing the JUnit tests report (website format)
+* A zip file containing the jacoco code coverage report (website format)
+
 ## Gradle tasks
 
 **Dokka and KDoc**
